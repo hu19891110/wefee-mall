@@ -101,6 +101,7 @@ class Wefeemall extends Addons
         `goods_addition_params` varchar(2550) not null comment "商品附加参数",
         `goods_score` decimal(3,2) default 0 not null comment "商品评分",
         `goods_sales` int(1) default 0 not null comment "销量",
+        `goods_description` text not null comment "商品描述",
         `created_at` timestamp,
         `updated_at` timestamp,
         `published_at` timestamp,

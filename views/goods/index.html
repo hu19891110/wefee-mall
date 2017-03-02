@@ -1,0 +1,62 @@
+{extend name="./layout/base" /}
+
+{block name="body"}
+
+{include file="./common/nav"}
+
+<div class="container mt-20 bg-fff pt-15-pb-15">
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="{:aurl('wefeemall/goods/add')}" class="btn btn-primary">添加商品</a>
+        </div>
+
+        <div class="col-lg-12 mt-20">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <thead>
+                        <th>Logo</th>
+                        <th>状态</th>
+                        <th>分类</th>
+                        <th>商品</th>
+                        <th>库存</th>
+                        <th>价格</th>
+                        <th>评分</th>
+                        <th>销量</th>
+                        <th>操作</th>
+                        </thead>
+                        <tbody>
+                        {volist name="goods" id="item"}
+                        <tr>
+                            <td><img src="{$item->goods_photos[0]}" width="120" height="60"></td>
+                            <td>{$item->goods_status}</td>
+                            <td>{$item->category->category_name}</td>
+                            <td>{$item->goods_name}</td>
+                            <td>{$item->goods_stock}</td>
+                            <td>
+                                <p>原价：<span style="text-decoration: line-through;">{$item->goods_origin_cost}</span></p>
+                                <p>现价：{$item->goods_now_cost}</p>
+                            </td>
+                            <td><span class="label label-info">{$item->goods_score}</span></td>
+                            <td><span class="label label-danger">{$item->goods_sales}</span></td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{:aurl('wefeemall/goods/edit', ['goods_id' => $item->id])}" class="btn btn-warning">编辑</a>
+                                    <a onclick="if (confirm('确定删除？')) { location.href = '{:aurl('wefeemall/goods/delete', ['goods_id' => $item->id])}'; }"  class="btn btn-danger">删除</a>
+                                    <a href="{:aurl('wefeemall/goods/info', ['goods_id' => $item->id])}" class="btn btn-info">详情</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{include file="./common/footer"}
+
+{/block}
