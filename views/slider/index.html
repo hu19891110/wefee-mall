@@ -1,0 +1,61 @@
+{extend name="./layout/base" /}
+
+{block name="body"}
+
+{include file="./common/nav"}
+
+<div class="container mt-20 bg-fff pt-15-pb-15">
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="{:aurl('wefeemall/slider/add')}" class="btn btn-primary btn-sm">添加幻灯片</a>
+        </div>
+
+        <div class="col-lg-12 mt-20">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>排序</th>
+                            <th>状态</th>
+                            <th class="text-center">幻灯片</th>
+                            <th class="text-center">时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="sliders" id="slider"}
+                        <tr>
+                            <td>{$slider->id}</td>
+                            <td>{$slider->slider_sort}</td>
+                            <td>{$slider->slider_status == 1 ? '<span class="label label-success">正常</span>' : '<span class="label label-danger">停止</span>'}</td>
+                            <td class="text-center">
+                                <p><img src="{$slider->slider_photo}" width="120" height="60"></p>
+                                <p>{$slider->slider_title}</p>
+                                <p>{$slider->slider_url}</p>
+                            </td>
+                            <td class="text-center">
+                                <p>创建：{$slider->created_at}</p>
+                                <p>编辑：{$slider->updated_at}</p>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{:aurl('wefeemall/slider/edit', ['slider_id' => $slider->id])}" class="btn btn-warning">编辑</a>
+                                    <a onclick="if (confirm('确定删除？')) { location.href = '{:aurl('wefeemall/slider/delete', ['slider_id' => $slider->id])}'; }"  class="btn btn-danger">删除</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{include file="./common/footer"}
+
+{/block}
