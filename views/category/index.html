@@ -1,0 +1,89 @@
+{extend name="./layout/base" /}
+
+{block name="body"}
+
+{include file="./common/nav"}
+
+<div class="container mt-20 bg-fff pt-15-pb-15">
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="{:aurl('wefeemall/category/add')}" class="btn btn-primary">添加分类</a>
+        </div>
+
+        <div class="col-lg-12 mt-20">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>排序</th>
+                            <th>状态</th>
+                            <th>分类</th>
+                            <th>时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="categories" id="category"}
+                        <tr>
+                            <td>
+                                {if condition="$category->category_icon neq ''"}
+                                <p><img src="{$category->category_icon}" width="60" height="60" style="border-radius: 30px;"></p>
+                                {else}
+                                {$category->id}
+                                {/if}
+                            </td>
+                            <td>{$category->category_sort}</td>
+                            <td>{$category->category_status == 1 ? '<span class="label label-success">正常</span>' : '<span class="label label-danger">停止</span>'}</td>
+                            <td><b>{$category->category_name}</b></td>
+                            <td>
+                                <p>创建：{$category->created_at}</p>
+                                <p>编辑：{$category->updated_at}</p>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{:aurl('wefeemall/category/edit', ['category_id' => $category->id])}" class="btn btn-warning">编辑</a>
+                                    <a onclick="if (confirm('确定删除？')) { location.href = '{:aurl('wefeemall/category/delete', ['category_id' => $category->id])}'; }"  class="btn btn-danger">删除</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {if condition="$category->fid eq 0"}
+                        {volist name="$category->children()->order('category_sort', 'asc')->select()" id="item"}
+                        <tr>
+                            <td>
+                                {if condition="$item->category_icon neq ''"}
+                                <p><img src="{$item->category_icon}" width="60" height="60" style="border-radius: 30px;"></p>
+                                {else}
+                                {$item->id}
+                                {/if}
+                            </td>
+                            <td>{$item->category_sort}</td>
+                            <td>{$item->category_status == 1 ? '<span class="label label-success">正常</span>' : '<span class="label label-danger">停止</span>'}</td>
+                            <td>┣  {$item->category_name}</td>
+                            <td>
+                                <p>创建：{$item->created_at}</p>
+                                <p>编辑：{$item->updated_at}</p>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{:aurl('wefeemall/category/edit', ['category_id' => $item->id])}" class="btn btn-warning">编辑</a>
+                                    <a onclick="if (confirm('确定删除？')) { location.href = '{:aurl('wefeemall/category/delete', ['category_id' => $item->id])}'; }"  class="btn btn-danger">删除</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {/volist}
+                        {/if}
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{include file="./common/footer"}
+
+{/block}

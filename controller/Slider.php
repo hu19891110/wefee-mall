@@ -20,7 +20,7 @@ class Slider extends Base
     {
         $title = '添加幻灯片';
 
-        return view(VIEW_PATH . '/slider/add.html', compact('title', 'sliders'));
+        return view(VIEW_PATH . '/slider/add.html', compact('title'));
     }
 
     public function create()
