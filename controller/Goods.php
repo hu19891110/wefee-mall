@@ -10,11 +10,25 @@ class Goods extends Base
 
     public function index()
     {
-        $goods = MallGoods::where('goods_status', '<>', -9)->order('created_at', 'desc')->paginate(15);
+        $where['goods_status'] = ['<>', -9];
+        $request = request();
+        $queryParams = [];
+        if ($request->has('goods_name') && $request->param('goods_name') != '') {
+            $where['goods_name'] = ['like', "%".$request->param('goods_name')."%"];
+            $queryParams['goods_name'] = $request->param('goods_name');
+        }
+        if ($request->has('category_id') && $request->param('category_id') != 0) {
+            $where['category_id'] = $request->param('category_id');
+            $queryParams['category_id'] = $request->param('category_id');
+        }
+
+        $goods = MallGoods::where($where)->order('created_at', 'desc')->paginate(1, false, ['query' => $queryParams]);
+
+        $categories = MallCategories::where('fid', 0)->order('category_sort', 'asc')->select();
 
         $title = '商品列表';
 
-        return view(VIEW_PATH . '/goods/index.html', compact('title', 'goods'));
+        return view(VIEW_PATH . '/goods/index.html', compact('title', 'categories', 'goods'));
     }
 
     public function add()
@@ -108,6 +122,15 @@ class Goods extends Base
         ]);
 
         $this->success('操作成功');
+    }
+
+    public function info()
+    {
+        $goods = $this->getGoods();
+
+        $title = '商品详情';
+
+        return view(VIEW_PATH . '/goods/info.html', compact('title', 'goods'));
     }
 
     public function getGoods()
