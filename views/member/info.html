@@ -1,0 +1,108 @@
+{extend name="./layout/base" /}
+
+{block name="body"}
+
+{include file="./common/nav"}
+
+<div class="container mt-20 bg-fff pt-15-pb-15">
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="{:aurl('wefeemall/member')}" class="btn btn-primary">返回列表</a>
+        </div>
+
+        <div class="col-lg-12 mt-20">
+            <h5>基本信息</h5>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-3 lh-40 text-center">
+                            <p><img src="{$member->avatar}" width="60" height="60" style="border-radius: 30px;" /></p>
+                            <p>ID：<b>{$member->id}</b></p>
+                        </div>
+                        <div class="col-sm-3 lh-40"><b>呢称：</b>{$member->nickname}</div>
+                        <div class="col-sm-3 lh-40"><b>手机：</b>{$member->mobile}</div>
+                        <div class="col-sm-3 lh-40"><b>余额：</b>{$member->credit1} 元</div>
+                        <div class="col-sm-3 lh-40"><b>积分：</b>{$member->credit2} 积分</div>
+                        <div class="col-sm-3 lh-40"><b>创建：</b>{$member->created_at}</div>
+                        <div class="col-sm-3 lh-40"><b>编辑：</b>{$member->updated_at}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 mt-20">
+            <h5>TA的订单</h5>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>订单号</th>
+                            <th>价格</th>
+                            <th>时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 mt-20">
+            <h5>TA的评价</h5>
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 mt-20">
+            <h5>TA的地址</h5>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>联系电话</th>
+                            <th>地址</th>
+                            <th>默认</th>
+                            <th>时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="$member->address" id="address"}
+                        <tr>
+                            <td>{$address->true_name}</td>
+                            <td>{$address->contact_phone}</td>
+                            <td>
+                                {$address->province} {$address->city} {$address->region} {$address->street}
+                            </td>
+                            <td>
+                                {if condition="$address->is_default eq 1"}
+                                <span class="label label-info">是</span>
+                                {else}
+                                <span class="label label-default">否</span>
+                                {/if}
+                            </td>
+                            <td>
+                                <p>创建：{$address->created_at}</p>
+                                <p>编辑：{$address->updated_at}</p>
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{include file="./common/footer"}
+
+{/block}
