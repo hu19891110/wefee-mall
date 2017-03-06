@@ -21,7 +21,7 @@ class Member extends Base
 
         $title = '会员列表';
 
-        return view(VIEW_PATH . '/member/index.html', compact('title', 'users'));
+        return view(VIEW_PATH . '/admin/member/index.html', compact('title', 'users'));
     }
 
     public function edit()
@@ -30,7 +30,7 @@ class Member extends Base
 
         $title = '编辑会员信息';
 
-        return view(VIEW_PATH . '/member/edit.html', compact('title', 'member'));
+        return view(VIEW_PATH . '/admin/member/edit.html', compact('title', 'member'));
     }
 
     public function update()
@@ -72,7 +72,7 @@ class Member extends Base
 
         $title = '会员详细信息';
 
-        return view(VIEW_PATH . '/member/info.html', compact('title', 'member'));
+        return view(VIEW_PATH . '/admin/member/info.html', compact('title', 'member'));
     }
 
     protected function getUser()

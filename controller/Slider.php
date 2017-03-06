@@ -13,14 +13,14 @@ class Slider extends Base
 
         $title = '幻灯片列表';
 
-        return view(VIEW_PATH . '/slider/index.html', compact('title', 'sliders'));
+        return view(VIEW_PATH . '/admin/slider/index.html', compact('title', 'sliders'));
     }
 
     public function add()
     {
         $title = '添加幻灯片';
 
-        return view(VIEW_PATH . '/slider/add.html', compact('title'));
+        return view(VIEW_PATH . '/admin/slider/add.html', compact('title'));
     }
 
     public function create()
@@ -38,7 +38,7 @@ class Slider extends Base
 
         $title = '编辑幻灯片';
 
-        return view(VIEW_PATH . '/slider/edit.html', compact('title', 'slider'));
+        return view(VIEW_PATH . '/admin/slider/edit.html', compact('title', 'slider'));
     }
 
     public function update()

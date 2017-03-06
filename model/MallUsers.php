@@ -1,6 +1,5 @@
 <?php namespace addons\wefeemall\model;
 
-
 class MallUsers extends BaseModel
 {
 

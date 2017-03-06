@@ -28,7 +28,7 @@ class Goods extends Base
 
         $title = '商品列表';
 
-        return view(VIEW_PATH . '/goods/index.html', compact('title', 'categories', 'goods'));
+        return view(VIEW_PATH . '/admin/goods/index.html', compact('title', 'categories', 'goods'));
     }
 
     public function add()
@@ -37,7 +37,7 @@ class Goods extends Base
 
         $title = '添加商品';
 
-        return view(VIEW_PATH . '/goods/add.html', compact('title', 'categories'));
+        return view(VIEW_PATH . '/admin/goods/add.html', compact('title', 'categories'));
     }
 
     public function create()
@@ -57,7 +57,7 @@ class Goods extends Base
 
         $title = '编辑商品';
 
-        return view(VIEW_PATH . '/goods/edit.html', compact('title', 'categories', 'goods'));
+        return view(VIEW_PATH . '/admin/goods/edit.html', compact('title', 'categories', 'goods'));
     }
 
     public function update()
@@ -130,7 +130,7 @@ class Goods extends Base
 
         $title = '商品详情';
 
-        return view(VIEW_PATH . '/goods/info.html', compact('title', 'goods'));
+        return view(VIEW_PATH . '/admin/goods/info.html', compact('title', 'goods'));
     }
 
     public function getGoods()

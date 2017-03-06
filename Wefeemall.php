@@ -55,7 +55,8 @@ class Wefeemall extends Addons
         CREATE TABLE `'.full_table('mall_users').'` (
         `id` int(11) unsigned not null AUTO_INCREMENT,
         `nickname` varchar(24) not null comment "呢称",
-        `mobile` varchar(11) not null comment "手机",
+        `avatar` varchar(255) not null comment "头像",
+        `username` varchar(11) not null comment "手机",
         `password` varchar(64) not null comment "密码",
         `credit1` decimal(10,2) unsigned default 0 not null comment "余额",
         `credit2` decimal(10,2) unsigned default 0 not null comment "积分",

@@ -1,8 +1,8 @@
 <?php namespace addons\wefeemall\controller;
 
-use addons\wefeemall\model\MallGoods;
 use think\Validate;
 use app\common\controller\Base;
+use addons\wefeemall\model\MallGoods;
 use addons\wefeemall\model\MallCategories;
 
 class Category extends Base
@@ -14,7 +14,7 @@ class Category extends Base
 
         $title = '商品分类列表';
 
-        return view(VIEW_PATH . '/category/index.html', compact('title', 'categories'));
+        return view(VIEW_PATH . '/admin/category/index.html', compact('title', 'categories'));
     }
 
     public function add()
@@ -23,7 +23,7 @@ class Category extends Base
 
         $title = '添加商品分类';
 
-        return view(VIEW_PATH . '/category/add.html', compact('title', 'categories'));
+        return view(VIEW_PATH . '/admin/category/add.html', compact('title', 'categories'));
     }
 
     public function create()
@@ -43,7 +43,7 @@ class Category extends Base
 
         $title = '编辑幻灯片';
 
-        return view(VIEW_PATH . '/category/edit.html', compact('title', 'categories', 'category'));
+        return view(VIEW_PATH . '/admin/category/edit.html', compact('title', 'categories', 'category'));
     }
 
     public function update()
