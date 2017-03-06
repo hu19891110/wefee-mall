@@ -1,0 +1,37 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+
+{block name="body"}
+
+<div class="address-container bg-fff" style="margin-top: 40px;">
+
+    {volist name="$user->address" id="address"}
+    <div class="weui-flex">
+        <div class="weui-flex__item pl-10 pr-10 pt-20 pb-20 bd-b">
+            <div class="left text-c pl-10 pr-10">
+                <p>
+                    {$address->true_name}
+                    {if condition="$address->is_default eq 1"}
+                    <br><span class="tag" style="color: #b4282d;">默认</span>
+                    {else}
+                    <br><span class="tag">否</span>
+                    {/if}
+                </p>
+            </div>
+            <div class="left">
+                <p class="lh-40">{$address->contact_phone}</p>
+                <p class="fs-08 lh-20">{$address->province}{$address->city}{$address->region}{$address->street}</p>
+            </div>
+            <div class="right text-c">
+                <img src="/addons/assets/wefeemall/static/images/icon/delete.png" data-url="{:aurl('wefeemall/index.member/deleteAddress')}" data-id="{$address->id}" class="delete" width="24" height="36">
+            </div>
+        </div>
+    </div>
+    {/volist}
+</div>
+
+<div class="my-address-menu">
+    <a href="{:aurl('wefeemall/index.member/addAddress')}">新建</a>
+</div>
+
+{/block}

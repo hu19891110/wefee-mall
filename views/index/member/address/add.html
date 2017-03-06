@@ -1,0 +1,72 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+{block name="css"}
+<link rel="stylesheet" href="/addons/assets/wefeemall/static/js/LArea/css/LArea.css">
+{/block}
+
+{block name="body"}
+
+<div class="weui-flex" style="margin-top: 40px;">
+    <div class="weui-flex__item">
+        <div class="weui-cells weui-cells_form">
+            <form action="{:aurl('wefeemall/index.member/postCreateAddress')}" method="post">
+                <div class="weui-cell">
+                    <input class="weui-input" type="text" name="true_name" placeholder="姓名"/>
+                </div>
+                <div class="weui-cell">
+                    <input type="text" class="weui-input" name="contact_phone" placeholder="联系电话">
+                </div>
+                <div class="weui-cell">
+                    <input id="area1" class="weui-input" type="text" name="area" placeholder="选择地区" value="" readonly="readonly">
+                    <input id="area2" type="hidden" value="">
+                </div>
+                <div class="weui-cell">
+                    <input type="text" name="street" class="weui-input" placeholder="详细地址，如：街道，楼盘号等">
+                </div>
+                <div class="weui-cell">
+                    <input type="checkbox" name="is_default" id="is_default" value="1"> <label for="is_default">默认地址</label>
+                </div>
+                <button type="submit" style="display: none;"></button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="add-address-menu">
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+            <a class="cancel" href="{:aurl('wefeemall/index.member/myAddress')}">取消</a>
+        </div>
+        <div class="weui-flex__item">
+            <a class="confirm">保存</a>
+        </div>
+    </div>
+</div>
+
+{/block}
+
+{block name="js"}
+<script src="/addons/assets/wefeemall/static/js/LArea/LAreaData1.js"></script>
+<script src="/addons/assets/wefeemall/static/js/LArea/LArea.js"></script>
+<script>
+    $(function () {
+        var area = new LArea();
+        area.init({
+            'trigger': '#area1',
+            'valueTo':'#area2',
+            'keys': {
+                id: 'id',
+                name: 'name'
+            },
+            'type':1,
+            'data':LAreaData
+        });
+
+        $('.confirm').click(function () {
+            $('button[type="submit"]').click();
+        });
+
+    });
+</script>
+{/block}
