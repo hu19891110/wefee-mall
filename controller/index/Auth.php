@@ -1,5 +1,6 @@
 <?php namespace addons\wefeemall\controller\index;
 
+use addons\wefeemall\traits\MobileVerifyCodeCheck;
 use think\Validate;
 use think\helper\Hash;
 use addons\wefeemall\lib\AuthManage;
@@ -8,7 +9,7 @@ use addons\wefeemall\traits\VerifyCodeCheck;
 
 class Auth extends Base
 {
-    use VerifyCodeCheck;
+    use VerifyCodeCheck,MobileVerifyCodeCheck;
 
     public function login()
     {
@@ -55,6 +56,8 @@ class Auth extends Base
 
         $this->checkVerifyCode();
 
+        $this->mobileVerifyCodeCheck();
+
         $data = $request->only([
             'nickname', 'username', 'password', 'password_confirm',
         ]);
@@ -68,6 +71,7 @@ class Auth extends Base
         $member = new MallUsers;
         $member->create([
             'nickname' => $data['nickname'],
+            'avatar'   => get_addon_config('wefeemall', 'user_default_avatar'),
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
         ]);
@@ -88,8 +92,10 @@ class Auth extends Base
 
         $this->checkVerifyCode();
 
+        $this->mobileVerifyCodeCheck();
+
         $data = $request->only([
-            'mobile', 'password', 'password_confirm',
+            'username', 'password', 'password_confirm',
         ]);
 
         $validator = new Validate([
@@ -105,7 +111,7 @@ class Auth extends Base
             $this->error($validator->getError());
         }
 
-        $user = MallUsers::get(['username' => $data['mobile']]);
+        $user = MallUsers::get(['username' => $data['username']]);
 
         if (! $user) {
             $this->error('用户不存在');

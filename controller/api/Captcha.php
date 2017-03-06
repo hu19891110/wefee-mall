@@ -11,6 +11,7 @@ class Captcha extends Controller
         $captcha = new CaptchaLib([
             'length' => 3,
             'useCurve' => false,
+            'reset' => false,
         ]);
 
         return $captcha->entry();
