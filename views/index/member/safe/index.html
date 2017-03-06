@@ -1,0 +1,29 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+
+{block name="body"}
+<div class="bg-fff bd-t" style="margin-top: 60px;">
+    <div class="weui-flex pl-15 pr-15 bd-b">
+        <div class="weui-flex__item lh-40 pt-5 pb-5">
+            <div class="left">
+                <a href="{:aurl('wefeemall/index.member/changePass')}">修改登录密码</a>
+            </div>
+            <div class="right pt-15">
+                <img class="right" src="/addons/assets/wefeemall/static/images/icon/right-arrow-menu.png" width="16" height="16">
+            </div>
+        </div>
+    </div>
+    <div class="weui-flex pl-15 pr-15 bg-fff bd-b">
+        <div class="weui-flex__item lh-40 pt-5 pb-5">
+            <div class="left">
+                <a href="{:aurl('wefeemall/index.member/changeMobile')}">更改手机号码</a>
+            </div>
+            <div class="right pt-15 img-middle">
+                <img class="right" src="/addons/assets/wefeemall/static/images/icon/right-arrow-menu.png" width="16" height="16">
+            </div>
+            <div class="right pr-10">{$user->username}</div>
+        </div>
+    </div>
+</div>
+
+{/block}

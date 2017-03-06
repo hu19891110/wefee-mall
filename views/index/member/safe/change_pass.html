@@ -1,0 +1,35 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+
+{block name="body"}
+
+<div class="weui-flex" style="margin-top: 60px;">
+    <div class="weui-flex__item">
+        <div class="weui-cells weui-cells_form">
+            <form action="{:aurl('wefeemall/index.member/postChangePass')}" method="post">
+                <div class="weui-cell">
+                    <input type="password" name="old_password" placeholder="原密码" class="weui-input">
+                </div>
+                <div class="weui-cell">
+                    <input type="password" name="new_password" placeholder="新密码" class="weui-input">
+                </div>
+                <div class="weui-cell">
+                    <input type="password" name="new_password_confirm" placeholder="在输入一次" class="weui-input">
+                </div>
+                <div class="weui-cell weui-cell_vcode">
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" name="verify_code" placeholder="验证码"/>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <img class="weui-vcode-img verify-code" src="{:aurl('wefeemall/api.captcha', ['time' => time()])}" />
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <button type="submit" class="weui-btn weui-btn_default">修改密码</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{/block}
