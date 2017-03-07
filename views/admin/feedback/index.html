@@ -1,0 +1,59 @@
+{extend name="./layout/base" /}
+
+{block name="header"}
+<link rel="stylesheet" href="/addons/assets/wefeemall/static/css/admin.css">
+{/block}
+
+{block name="body"}
+
+{include file="./common/nav"}
+
+<div class="container-fluid mt-20">
+    <div class="row bg-fff">
+        {include file="../addons/wefeemall/views/admin/common/menu.html" /}
+        <div class="col-lg-10 pt-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-warning btn-sm" onclick="if (confirm('确定删除？')) { location.href = '{:mall_url('feedback/clearOld')}'; }">删除三个月之前的数据</button>
+                </div>
+                <div class="col-md-12 mt-10">
+                    <p>共 <b>{$feedback->total()}</b> 条数据。</p>
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th class="text-center">用户</th>
+                            <th>反馈类型</th>
+                            <th>反馈内容</th>
+                            <th>时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="feedback" id="item"}
+                        <tr>
+                            <td>{$item->id}</td>
+                            <td class="text-center">
+                                <p>{$item->user->nickname}</p>
+                                <p>{$item->user->username}</p>
+                            </td>
+                            <td>{$item->feedback_type}</td>
+                            <td>{$item->feedback_content}</td>
+                            <td>{$item->created_at}</td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-12 text-center mt-20">
+                {$feedback->render()}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{include file="./common/footer"}
+
+{/block}
