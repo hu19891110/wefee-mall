@@ -8,7 +8,7 @@ trait LoginCheck
     protected function loginCheck()
     {
         if (! AuthManage::check()) {
-            $this->error('请登录', aurl('wefeemall/index.auth/login'));
+            $this->error('请登录', mall_url('index.auth/login'));
         }
     }
 

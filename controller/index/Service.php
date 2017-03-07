@@ -3,19 +3,18 @@
 use addons\wefeemall\lib\AuthManage;
 use addons\wefeemall\model\MallFeedback;
 use addons\wefeemall\traits\VerifyCodeCheck;
+use addons\wefeemall\traits\LoginCheck;
 use think\Validate;
 
 class Service extends Base
 {
-    use VerifyCodeCheck;
+    use VerifyCodeCheck,LoginCheck;
 
     public function _initialize()
     {
         parent::_initialize();
 
-        if (! AuthManage::check()) {
-            $this->error('请先登录', mall_url('index.auth/login'));
-        }
+        $this->loginCheck();
     }
 
     public function feedback()
@@ -27,7 +26,7 @@ class Service extends Base
 
     public function postFeedback()
     {
-        //$this->checkVerifyCode();
+        $this->checkVerifyCode();
 
         $data = $this->feedbackValidator();
 

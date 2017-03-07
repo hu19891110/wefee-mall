@@ -12,7 +12,7 @@ if (! function_exists('mall_config')) {
      */
     function mall_config($key = '')
     {
-        return get_addon_config('wefeemall', $key);
+        return get_addon_config(MALL_SIGN, $key);
     }
 }
 
@@ -24,6 +24,6 @@ if (! function_exists('mall_config')) {
      */
      function mall_url($dir)
     {
-        return aurl('wefeemall/' . ltrim($dir, '/'));
+        return aurl(MALL_SIGN . '/' . ltrim($dir, '/'));
     }
  }
