@@ -1,0 +1,75 @@
+{extend name="./layout/base" /}
+
+{block name="header"}
+<link rel="stylesheet" href="/addons/assets/wefeemall/static/css/admin.css">
+{/block}
+
+{block name="body"}
+
+{include file="./common/nav"}
+
+<div class="container-fluid mt-20">
+    <div class="row bg-fff">
+        {include file="../addons/wefeemall/views/admin/common/menu.html" /}
+        <div class="col-lg-10 pt-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{:mall_url('coupon/add')}" class="btn btn-primary">添加优惠券</a>
+                </div>
+                <div class="col-md-12 mt-10">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th width="5%">编号</th>
+                            <th width="5%">排序</th>
+                            <th class="text-center">优惠券</th>
+                            <th>发行/剩余</th>
+                            <th>状态</th>
+                            <th>时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="coupons" id="coupon"}
+                        <tr>
+                            <td>{$coupon->id}</td>
+                            <td>{$coupon->coupon_sort}</td>
+                            <td class="text-center">
+                                <p>{$coupon->coupon_name}</p>
+                                <p><span class="label label-info">{$coupon->coupon_type}：{$coupon->coupon_cost}</span></p>
+                                <p><span class="label label-primary">下限：{$coupon->coupon_inf} 元</span></p>
+                            </td>
+                            <td><span class="label label-warning">{$coupon->children()->count()}/{$coupon->coupon_num}</span></td>
+                            <td>
+                                {if condition="$coupon->coupon_status eq 1"}
+                                <span class="label label-success">正常</span>
+                                {elseif condition="$coupon->coupon_status eq -1" /}
+                                <span class="label label-warning">停止</span>
+                                {else /}
+                                <span class="label label-danger">过期</span>
+                                {/if}
+                            </td>
+                            <td>
+                                <p>开始：{$coupon->start_at}</p>
+                                <p>结束：{$coupon->end_at}</p>
+                                <p>创建：{$coupon->created_at}</p>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{:mall_url('coupon/edit', ['coupon_id' => $coupon->id])}" class="btn btn-warning">编辑</a>
+                                    <button onclick="if (confirm('确定删除？')) { location.href = '{:mall_url('coupon/delete', ['coupon_id' => $coupon->id])}'; }" class="btn btn-danger">删除</button>
+                                </div>
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="./common/footer"}
+
+{/block}

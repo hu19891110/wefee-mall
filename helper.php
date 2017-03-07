@@ -20,10 +20,11 @@ if (! function_exists('mall_config')) {
     /**
      * 获取URL
      * @param string $dir 结构
+     * @param array $params 参数
      * @return string
      */
-     function mall_url($dir)
+     function mall_url($dir, $params = [])
     {
-        return aurl(MALL_SIGN . '/' . ltrim($dir, '/'));
+        return aurl(MALL_SIGN . '/' . ltrim($dir, '/'), $params);
     }
  }

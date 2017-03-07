@@ -22,4 +22,8 @@ class MallCategories extends BaseModel
         return $this->hasMany('addons\wefeemall\model\MallGoods', 'category_id');
     }
 
+    public function coupons()
+    {
+        return $this->belongsToMany('addons\wefeemall\model\MallCoupons', full_table('mall_coupon_category'), 'coupon_id', 'category_id');
+    }
 }

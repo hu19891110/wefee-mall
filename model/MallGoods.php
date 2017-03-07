@@ -14,6 +14,11 @@ class MallGoods extends BaseModel
         return $this->hasMany('addons\wefeemall\model\MallGoodsComments', 'goods_id');
     }
 
+    public function coupons()
+    {
+        return $this->belongsToMany('addons\wefeemall\model\MallCoupons', full_table('mall_coupon_goods'), 'coupon_id', 'goods_id');
+    }
+
     public function setGoodsPhotosAttr($value)
     {
         return serialize($value);

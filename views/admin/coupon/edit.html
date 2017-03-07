@@ -1,0 +1,231 @@
+{extend name="./layout/base" /}
+
+{block name="header"}
+<link rel="stylesheet" href="/addons/assets/wefeemall/static/css/admin.css">
+<link rel="stylesheet" href="/addons/assets/wefeemall/static/js/select2/css/select2.min.css">
+{/block}
+
+{block name="body"}
+
+{include file="./common/nav"}
+
+<div class="container-fluid mt-20">
+    <div class="row bg-fff">
+        {include file="../addons/wefeemall/views/admin/common/menu.html" /}
+        <div class="col-lg-10 pt-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{:mall_url('coupon')}" class="btn btn-primary">返回优惠券列表</a>
+                </div>
+                <div class="col-md-12 mt-10">
+                    <form action="{:mall_url('coupon/update', ['coupon_id' => $coupon->id])}" method="post" class="form-horizontal">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
+                                <div>
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li role="presentation" class="active">
+                                            <a href="#home" aria-controls="home" role="tab" data-toggle="tab">基本信息</a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="#info" aria-controls="info" role="tab" data-toggle="tab">附加信息</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content" style="padding-top: 20px;">
+                                        <div role="tabpanel" class="tab-pane active" id="home">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">排序</label>
+                                                <div class="col-sm-10">
+                                                    <input type="number" name="coupon_sort" value="{$coupon->coupon_sort}" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">优惠券名</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="coupon_name" value="{$coupon->coupon_name}" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">优惠券类型</label>
+                                                <div class="col-sm-10">
+                                                    <select name="coupon_type" class="form-control">
+                                                        <option value="满减" {$coupon->coupon_type == '满减' ? 'selected' : ''}>满减</option>
+                                                        <option value="直减" {$coupon->coupon_type == '直减' ? 'selected' : ''}>直减</option>
+                                                        <option value="免邮" {$coupon->coupon_type == '免邮' ? 'selected' : ''}>免邮</option>
+                                                        <option value="折扣" {$coupon->coupon_type == '折扣' ? 'selected' : ''}>折扣</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">抵用价格</label>
+                                                <div class="col-sm-10">
+                                                    <input type="number" name="coupon_cost" value="{$coupon->coupon_cost}" class="form-control">
+                                                </div>
+                                                <div class="col-sm-10 col-sm-offset-2">
+                                                    <span class="help-block">注意：满减，直减请直接写价格，免邮为0，折扣：如8折请写8.</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">最低限额</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group">
+                                                        <input type="number" name="coupon_inf" value="{$coupon->coupon_inf}" class="form-control">
+                                                        <div class="input-group-addon">元</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-10 col-sm-offset-2">
+                                                    <span class="help-block">注意：此项是针对满减，折扣。</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">发放数量</label>
+                                                <div class="col-sm-10">
+                                                    <input type="number" name="coupon_num" value="{$coupon->coupon_num}" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">状态</label>
+                                                <div class="col-sm-10">
+                                                    <select name="coupon_status" class="form-control">
+                                                        <option value="1" {$coupon->coupon_status == 1 ? 'selected' : ''}>正常</option>
+                                                        <option value="3" {$coupon->coupon_status == 3 ? 'selected' : ''}>禁止领取</option>
+                                                        <option value="-1" {$coupon->coupon_status == -1 ? 'selected' : ''}>过期</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            {wefee:date title="开始时间" name="start_at" value="$coupon->start_at" /}
+
+                                            {wefee:date title="结束时间" name="end_at" value="$coupon->end_at" /}
+                                        </div>
+
+                                        <div role="tabpanel" class="tab-pane" id="info">
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">限制分类</label>
+                                                <div class="col-sm-10">
+                                                    <select name="category[]" class="select-category" multiple="multiple" style="width: 100%;">
+                                                        {volist name="$coupon->categories" id="category"}
+                                                        <option value="{$category->id}" selected>{$category->category_name}</option>
+                                                        {/volist}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">限制商品</label>
+                                                <div class="col-sm-10">
+                                                    <select name="goods[]" class="select-goods" multiple="multiple" style="width: 100%;">
+                                                        {volist name="$coupon->goods" id="goods"}
+                                                        <option value="{$goods->id}" selected>{$goods->goods_name}</option>
+                                                        {/volist}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <button type="submit" class="btn btn-primary">编辑此优惠券</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="./common/footer"}
+
+{/block}
+
+{block name="footer"}
+<script>
+    require(['jquery', '/addons/assets/wefeemall/static/js/select2/js/select2.min.js'], function () {
+        $('.select-category').select2({
+            ajax: {
+                delay: 1000,
+                url: '{:mall_url("api.category/all")}',
+                data: function (params) {
+                    console.log(params);
+                    var query = {
+                        search: params.term,
+                        page: params.page
+                    }
+                    return query;
+                },
+                processResults: function (data, params) {
+                    var arr = [];
+                    for (var i = 0; i < data.length; i++) {
+                        arr.push({
+                            id: data[i].id,
+                            text: data[i].category_name,
+                            disabled: true
+                        });
+                        for (var j = 0; j < data[i].children.length; j++) {
+                            arr.push({
+                                id: data[i].children[j].id,
+                                text: '|--' + data[i].children[j].category_name,
+                            });
+                        }
+                    }
+
+                    return {
+                        results: arr
+                    };
+                },
+            }
+        });
+
+        $('.select-goods').select2({
+            ajax: {
+                delay: 300,
+                url: '{:mall_url("api.goods/search")}',
+                data: function (params) {
+                    console.log(params);
+                    var query = {
+                        key_words: params.term,
+                        page: params.page
+                    }
+                    return query;
+                },
+                processResults: function (data, params) {
+                    if (typeof (data.error) != 'undefined') {
+                        return {};
+                    }
+                    params.page = data.current_page;
+
+                    var arr = [];
+                    for (var i = 0; i < data.data.length; i++) {
+                        arr.push({
+                            id: data.data[i].id,
+                            text: data.data[i].goods_name
+                        });
+                    }
+
+                    return {
+                        results: arr,
+                        pagination: {
+                            more: (data.current_page * data.per_page) < data.total
+                        }
+                    };
+                },
+                cache: true
+            }
+        });
+    });
+</script>
+{/block}
