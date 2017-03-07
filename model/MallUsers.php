@@ -13,4 +13,9 @@ class MallUsers extends BaseModel
         return $this->hasMany('addons\wefeemall\model\modelMailGoodsComments', 'user_id');
     }
 
+    public function feedback()
+    {
+        return $this->hasMany('addons\wefeemall\model\MallFeedback', 'user_id');
+    }
+
 }

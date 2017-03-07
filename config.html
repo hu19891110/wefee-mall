@@ -17,7 +17,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <ul class="nav nav-tabs" role="tablist">
+                        <ul class="nav nav-tabs" role`  ="tablist">
                             <li role="presentation" class="active"><a href="#base" aria-controls="base" role="tab" data-toggle="tab">基础配置</a></li>
                             <li role="presentation"><a href="#sms" aria-controls="sms" role="tab" data-toggle="tab">短信配置</a></li>
                         </ul>
@@ -26,6 +26,13 @@
                             <div role="tabpanel" class="tab-pane active" id="base">
 
                                 {wefee:image title="默认头像" name="user_default_avatar" value=":get_addon_config($addons['addons_sign'], 'user_default_avatar')" /}
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">美洽客服聊天地址</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="meiqia_service_chat_url" class="form-control" value="{:get_addon_config($addons['addons_sign'], 'meiqia_service_chat_url')}">
+                                    </div>
+                                </div>
 
                             </div>
                             <div role="tabpanel" class="tab-pane" id="sms">

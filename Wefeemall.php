@@ -34,6 +34,9 @@ class Wefeemall extends Addons
 
         /** 安装订单表 */
         $this->uninstallTableOrders();
+
+        /** 安装反馈表 */
+        $this->installTableFeedback();
     }
 
     protected function template()
@@ -181,6 +184,8 @@ class Wefeemall extends Addons
         $this->uninstallTableSliders();
 
         $this->uninstallTableOrders();
+
+        $this->uninstallTableFeedback();
     }
 
     protected function uninstallTableUsers()
@@ -220,7 +225,28 @@ class Wefeemall extends Addons
 
     public function upgrade()
     {
-        //
+        $this->uninstallTableFeedback();
+        $this->installTableFeedback();
+    }
+
+    protected function installTableFeedback()
+    {
+        Db::execute('
+        CREATE TABLE '.full_table('mall_feedback').'(
+        `id` int(11) unsigned not null AUTO_INCREMENT,
+        `user_id` int(11) unsigned not null,
+        `feedback_type` varchar(32) not null comment "反馈问题类型",
+        `feedback_content` varchar(255) not null comment "反馈内容",
+        `created_at` timestamp,
+        `updated_at` timestamp,
+        PRIMARY KEY(`id`)
+        )ENGINE=MyISAM DEFAULT CHARSET=utf8;
+        ');
+    }
+
+    protected function uninstallTableFeedback()
+    {
+        Db::execute('DROP TABLE IF EXISTS '.full_table('mall_feedback').';');
     }
 
 }
