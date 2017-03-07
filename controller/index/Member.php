@@ -2,7 +2,6 @@
 
 use addons\wefeemall\lib\AuthManage;
 use addons\wefeemall\model\MallUserAddress;
-use addons\wefeemall\model\MallUsers;
 use addons\wefeemall\traits\LoginCheck;
 use addons\wefeemall\traits\MobileVerifyCodeCheck;
 use addons\wefeemall\traits\VerifyCodeCheck;
@@ -67,7 +66,7 @@ class Member extends Base
             MallUserAddress::where('id', '<>', $address->id)->update(['is_default' => 0]);
         }
 
-        $this->success('添加成功', aurl('wefeemall/index.member/myAddress'));
+        $this->success('添加成功', mall_url('index.member/myAddress'));
     }
 
     protected function createAddressValidator()
@@ -94,7 +93,7 @@ class Member extends Base
     {
         MallUserAddress::get(request()->param('id'))->delete();
 
-        $this->success('操作成功', aurl('wefeemall/index.member/myAddress'));
+        $this->success('操作成功', mall_url('index.member/myAddress'));
     }
 
     public function safe()
@@ -168,7 +167,7 @@ class Member extends Base
         $user = AuthManage::user();
 
         if (! Hash::check($data['password'], $user->password)) {
-            $this->error('密码不正确', aurl('wefeemall/index.member/changeMobile'));
+            $this->error('密码不正确', mall_url('index.member/changeMobile'));
         }
 
         $user->mobile = $data['username'];

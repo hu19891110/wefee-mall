@@ -33,14 +33,14 @@ class Auth extends Base
             $this->error('登录失败');
         }
 
-        $this->success('登录成功', aurl('wefeemall/index.member'));
+        $this->success('登录成功', mall_url('index.member'));
     }
 
     public function logout()
     {
         AuthManage::logout();
 
-        $this->success('注销成功', aurl('wefeemall/index.auth/login'));
+        $this->success('注销成功', mall_url('index.auth/login'));
     }
 
     public function register()
@@ -76,7 +76,7 @@ class Auth extends Base
             'password' => Hash::make($data['password']),
         ]);
 
-        $this->success('注册成功，请登录。', aurl('wefeemall/index.auth/login'));
+        $this->success('注册成功，请登录。', mall_url('index.auth/login'));
     }
 
     public function findPass()
@@ -120,7 +120,7 @@ class Auth extends Base
        $user->password = Hash::make($data['password']);
         $user->save();
 
-        $this->success('密码重置成功，请登录。', aurl('wefeemall/index.auth/login'));
+        $this->success('密码重置成功，请登录。', mall_url('index.auth/login'));
     }
 
 }

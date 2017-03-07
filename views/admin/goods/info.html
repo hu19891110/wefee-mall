@@ -1,6 +1,7 @@
 {extend name="./layout/base" /}
 
 {block name="header"}
+<link rel="stylesheet" href="/addons/assets/wefeemall/static/css/admin.css">
 <style>
     .comment-img-container img { margin-top: 10px; margin-left: 10px; }
 </style>
@@ -10,70 +11,84 @@
 
 {include file="./common/nav"}
 
-<div class="container mt-20 bg-fff pt-15-pb-15">
-    <div class="row">
-        <div class="col-lg-12">
-            <a href="{:aurl('wefeemall/goods')}">返回商品列表</a>
-        </div>
+<div class="container-fluid mt-20">
+    <div class="row bg-fff">
+        {include file="../addons/wefeemall/views/admin/common/menu.html" /}
+        <div class="col-lg-10 pt-10">
+            <div class="row">
+                <div class="col-lg-12">
+                    <a href="{:aurl('wefeemall/goods')}">返回商品列表</a>
+                </div>
 
-        <div class="col-lg-12 mt-20">
+                <div class="col-lg-12 mt-20">
 
-            <h5>基本信息</h5>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row lh-40">
-                        <div class="col-sm-12"><b>商品名：</b>{$goods->goods_name}</div>
-                        <div class="col-sm-3"><b>分类：</b>{$goods->category->category_name}</div>
-                        <div class="col-sm-3"><b>库存：</b>{$goods->goods_stock}</div>
-                        <div class="col-sm-3"><b>原价：</b>{$goods->goods_origin_cost} 元</div>
-                        <div class="col-sm-3"><b>现价：</b>{$goods->goods_now_cost} 元</div>
-                        <div class="col-sm-3"><b>状态：</b>{$goods->goods_status == 1 ? '正常' : '停止'}</div>
-                        <div class="col-sm-3"><b>评分：</b>{$goods->goods_score} 分</div>
-                        <div class="col-sm-3"><b>销量：</b>{$goods->goods_sales}</div>
-                        <div class="col-sm-3"><b>创建：</b>{$goods->created_at}</div>
-                        <div class="col-sm-3"><b>编辑：</b>{$goods->updated_at}</div>
-                        <div class="col-sm-3"><b>上线：</b>{$goods->published_at}</div>
+                    <h5>基本信息</h5>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row lh-40">
+                                <div class="col-sm-12"><b>商品名：</b>{$goods->goods_name}</div>
+                                <div class="col-sm-3"><b>分类：</b>{$goods->category->category_name}</div>
+                                <div class="col-sm-3"><b>库存：</b>{$goods->goods_stock}</div>
+                                <div class="col-sm-3"><b>原价：</b>{$goods->goods_origin_cost} 元</div>
+                                <div class="col-sm-3"><b>现价：</b>{$goods->goods_now_cost} 元</div>
+                                <div class="col-sm-3"><b>状态：</b>{$goods->goods_status == 1 ? '正常' : '停止'}</div>
+                                <div class="col-sm-3"><b>评分：</b>{$goods->goods_score} 分</div>
+                                <div class="col-sm-3"><b>销量：</b>{$goods->goods_sales}</div>
+                                <div class="col-sm-3"><b>创建：</b>{$goods->created_at}</div>
+                                <div class="col-sm-3"><b>编辑：</b>{$goods->updated_at}</div>
+                                <div class="col-sm-3"><b>上线：</b>{$goods->published_at}</div>
 
-                        <div class="col-sm-12">
-                            <table class="table table-bordered">
-                                {volist name="$goods->goods_addition_params" id="params"}
-                                <tr>
-                                    <td width="20%"><b>{$params.name}</b></td>
-                                    <td>{$params.value}</td>
-                                </tr>
-                                {/volist}
-                            </table>
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered">
+                                        {volist name="$goods->goods_addition_params" id="params"}
+                                        <tr>
+                                            <td width="20%"><b>{$params.name}</b></td>
+                                            <td>{$params.value}</td>
+                                        </tr>
+                                        {/volist}
+                                    </table>
+                                </div>
+
+                                <div class="col-sm-10" style="margin-top: 10px;">
+                                    <p class="comment-img-container">
+                                        {volist name="$goods->goods_photos" id="photo"}
+                                        <img src="{$photo}" width="120" height="60">
+                                        {/volist}
+                                    </p>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <h5>商品评价</h5>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row lh-40">
-                        <div class="col-lg-12">
-                            <p><b>小滕说：</b>我是评价内容</p>
-                            <p class="comment-img-container">
-                                <img src="http://img.1985t.com/uploads/attaches/2016/02/64779-auDgLV2.jpg" width="120" height="60">
-                            </p>
-                            <hr>
+                    <h5>商品评价</h5>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row lh-40">
+                                <div class="col-lg-12">
+                                    <p><b>小滕说：</b>我是评价内容</p>
+                                    <p class="comment-img-container">
+                                        <img src="http://img.1985t.com/uploads/attaches/2016/02/64779-auDgLV2.jpg" width="120" height="60">
+                                    </p>
+                                    <hr>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <h5>相关订单</h5>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row lh-40">
+                    <h5>相关订单</h5>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row lh-40">
 
+                            </div>
+                        </div>
                     </div>
+
                 </div>
+
             </div>
-
         </div>
-
     </div>
 </div>
 

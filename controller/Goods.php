@@ -22,7 +22,7 @@ class Goods extends Base
             $queryParams['category_id'] = $request->param('category_id');
         }
 
-        $goods = MallGoods::where($where)->order('created_at', 'desc')->paginate(1, false, ['query' => $queryParams]);
+        $goods = MallGoods::where($where)->order('created_at', 'desc')->paginate(15, false, ['query' => $queryParams]);
 
         $categories = MallCategories::where('fid', 0)->order('category_sort', 'asc')->select();
 

@@ -13,7 +13,7 @@ class Member extends Base
         $params = [];
         $request = request();
         if ($request->has('key_words') && $request->param('key_words') != '') {
-            $where['nickname|mobile'] = ['LIKE', '%'.$request->param('key_words').'%'];
+            $where['nickname|username'] = ['LIKE', '%'.$request->param('key_words').'%'];
             $params['key_words'] = $request->param('key_words');
         }
 
@@ -38,12 +38,12 @@ class Member extends Base
         $user = $this->getUser();
 
         $data = request()->only([
-            'nickname', 'mobile', 'avatar', 'credit1', 'credit2',
+            'nickname', 'username', 'avatar', 'credit1', 'credit2',
         ]);
 
         $validator = new Validate([
             'nickname|呢称' => 'require',
-            'mobile|手机号' => 'require',
+            'username|手机号' => 'require',
             'avatar|头像' => 'require',
         ]);
 

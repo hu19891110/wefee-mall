@@ -1,86 +1,95 @@
 {extend name="./layout/base" /}
 
+{block name="header"}
+<link rel="stylesheet" href="/addons/assets/wefeemall/static/css/admin.css">
+{/block}
+
 {block name="body"}
 
 {include file="./common/nav"}
 
-<div class="container mt-20 bg-fff pt-15-pb-15">
-    <div class="row">
-        <div class="col-lg-12">
-            <a href="{:aurl('wefeemall')}" class="btn btn-primary">返回首页</a>
-        </div>
-
-        <div class="col-lg-12 mt-20">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <form action="" method="get" class="form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">呢称/手机</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="key_words" value="{:request()->param('key_words')}" class="form-control" placeholder="请输入关键字">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-10 col-sm-offset-2">
-                                <button type="submit" class="btn btn-primary">筛选</button>
-                                <a href="{:aurl('wefeemall/member/index')}" class="btn btn-warning">取消</a>
-                            </div>
-                        </div>
-                    </form>
+<div class="container-fluid mt-20">
+    <div class="row bg-fff">
+        {include file="../addons/wefeemall/views/admin/common/menu.html" /}
+        <div class="col-lg-10 pt-10">
+            <div class="row">
+                <div class="col-lg-12">
+                    <a href="{:aurl('wefeemall')}" class="btn btn-primary">返回首页</a>
                 </div>
-            </div>
-        </div>
 
-        <div class="col-lg-12 mt-20">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <table class="table table-hover">
-                        <thead>
-                        <th width="5%">ID</th>
-                        <th class="text-center">用户</th>
-                        <th width="10%">手机号</th>
-                        <th>余额</th>
-                        <th>积分</th>
-                        <th>状态</th>
-                        <th>注册</th>
-                        <th>操作</th>
-                        </thead>
-                        <tbody>
-                        {volist name="users" id="member"}
-                        <tr>
-                            <td>{$member->id}</td>
-                            <td class="text-center">
-                                <p><img src="{$member->avatar}" width="60" height="60" style="border-radius: 30px;"></p>
-                                <p>{$member->nickname}</p>
-                            </td>
-                            <td>{$member->mobile}</td>
-                            <td>{$member->credit1} 元</td>
-                            <td>{$member->credit2} 积分</td>
-                            <td>{$member->status == 1 ? '<span class="label label-success">正常</span>' : '<span class="label label-warning">锁定</span>'}</td>
-                            <td>{$member->created_at}</td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    <a href="{:aurl('wefeemall/member/edit', ['user_id' => $member->id])}" class="btn btn-primary">编辑</a>
-                                    <a href="{:aurl('wefeemall/member/info', ['user_id' => $member->id])}" class="btn btn-info">信息</a>
-                                    {if condition="$member->status eq 1"}
-                                    <a href="{:aurl('wefeemall/member/ban', ['user_id' => $member->id])}" class="btn btn-danger">锁定</a>
-                                    {else}
-                                    <a href="{:aurl('wefeemall/member/ban', ['user_id' => $member->id])}" class="btn btn-warning">解锁</a>
-                                    {/if}
+                <div class="col-lg-12 mt-20">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form action="" method="get" class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">呢称/手机</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="key_words" value="{:request()->param('key_words')}" class="form-control" placeholder="请输入关键字">
+                                    </div>
                                 </div>
-                            </td>
-                        </tr>
-                        {/volist}
-                        </tbody>
-                    </table>
+                                <div class="form-group">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <button type="submit" class="btn btn-primary">筛选</button>
+                                        <a href="{:aurl('wefeemall/member/index')}" class="btn btn-warning">取消</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="col-lg-12 mt-20">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <table class="table table-hover">
+                                <thead>
+                                <th width="5%">ID</th>
+                                <th class="text-center">用户</th>
+                                <th width="10%">手机号</th>
+                                <th>余额</th>
+                                <th>积分</th>
+                                <th>状态</th>
+                                <th>注册</th>
+                                <th>操作</th>
+                                </thead>
+                                <tbody>
+                                {volist name="users" id="member"}
+                                <tr>
+                                    <td>{$member->id}</td>
+                                    <td class="text-center">
+                                        <p><img src="{$member->avatar}" width="60" height="60" style="border-radius: 30px;"></p>
+                                        <p>{$member->nickname}</p>
+                                    </td>
+                                    <td>{$member->username}</td>
+                                    <td>{$member->credit1} 元</td>
+                                    <td>{$member->credit2} 积分</td>
+                                    <td>{$member->status == 1 ? '<span class="label label-success">正常</span>' : '<span class="label label-warning">锁定</span>'}</td>
+                                    <td>{$member->created_at}</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="{:aurl('wefeemall/member/edit', ['user_id' => $member->id])}" class="btn btn-primary">编辑</a>
+                                            <a href="{:aurl('wefeemall/member/info', ['user_id' => $member->id])}" class="btn btn-info">信息</a>
+                                            {if condition="$member->status eq 1"}
+                                            <a href="{:aurl('wefeemall/member/ban', ['user_id' => $member->id])}" class="btn btn-danger">锁定</a>
+                                            {else}
+                                            <a href="{:aurl('wefeemall/member/ban', ['user_id' => $member->id])}" class="btn btn-warning">解锁</a>
+                                            {/if}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 mt-20 text-center">
+                    {$users->render()}
+                </div>
+
             </div>
         </div>
-
-        <div class="col-lg-12 mt-20 text-center">
-            {$users->render()}
-        </div>
-
     </div>
 </div>
 
