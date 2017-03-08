@@ -9,10 +9,12 @@ class Captcha extends Controller
     public function index()
     {
         $captcha = new CaptchaLib([
-            'length' => 3,
+            'length'   => 4,
             'useCurve' => false,
-            'reset' => false,
+            'reset'    => false,
         ]);
+
+        ob_clean();
 
         return $captcha->entry();
     }
