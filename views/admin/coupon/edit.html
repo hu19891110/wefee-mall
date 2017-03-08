@@ -96,6 +96,7 @@
                                                     <select name="coupon_status" class="form-control">
                                                         <option value="1" {$coupon->coupon_status == 1 ? 'selected' : ''}>正常</option>
                                                         <option value="3" {$coupon->coupon_status == 3 ? 'selected' : ''}>禁止领取</option>
+                                                        <option value="5" {$coupon->coupon_status == 5 ? 'selected' : ''}>已使用</option>
                                                         <option value="-1" {$coupon->coupon_status == -1 ? 'selected' : ''}>过期</option>
                                                     </select>
                                                 </div>

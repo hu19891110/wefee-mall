@@ -21,11 +21,16 @@ class Coupon extends Base
 
     public function member()
     {
-        $user = AuthManage::user();
+        $where = [];
+        if (request()->param('coupon_status') != '') {
+            $where['status'] = request()->param('coupon_status');
+        }
+
+        $coupons = AuthManage::user()->coupons()->where($where)->select();
 
         $title = '我的优惠券';
 
-        return view(VIEW_PATH . '/index/coupon/member.html', compact('title', 'user'));
+        return view(VIEW_PATH . '/index/coupon/member.html', compact('title', 'coupons'));
     }
 
 }

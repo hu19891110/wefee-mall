@@ -1,41 +1,73 @@
 {extend name="../addons/wefeemall/views/index/layout/base.html" /}
 
+{block name="css"}
+<style>
+    .active { color: #b4282d; }
+</style>
+{/block}
 
 {block name="body"}
 
 <div class="weui-flex bg-fff lh-40 pt-5 pb-5 bd-b" style="margin-top: 40px;">
-    <div class="weui-flex__item text-c">
+    <a href="{:mall_url('index.coupon/member')}" class="weui-flex__item text-c {:request()->param('coupon_status') == '' ? 'active' : ''}">
         全部
-    </div>
-    <div class="weui-flex__item text-c">
+    </a>
+    <a href="{:mall_url('index.coupon/member', ['coupon_status' => 1])}" class="weui-flex__item text-c {:request()->param('coupon_status') == 1 ? 'active' : ''}">
         未使用
-    </div>
-    <div class="weui-flex__item text-c">
+    </a>
+    <a href="{:mall_url('index.coupon/member', ['coupon_status' => 5])}" class="weui-flex__item text-c {:request()->param('coupon_status') == 5 ? 'active' : ''}">
         已使用
-    </div>
-    <div class="weui-flex__item text-c">
+    </a>
+    <a href="{:mall_url('index.coupon/member', ['coupon_status' => -1])}" class="weui-flex__item text-c {:request()->param('coupon_status') == -1 ? 'active' : ''}">
         已过期
-    </div>
+    </a>
 </div>
 
+{volist name="$coupons" id="coupon"}
 <div class="weui-flex pd-10">
-    <div class="weui-flex__item coupon-list-item">
-        <h3 class="fs-12">满200减38元</h3>
-        <p class="fs-08">2017.03.03-2017.03.08</p>
+    <div class="weui-flex__item coupon-list-item{$coupon->coupon->coupon_status == 1 ? '' : '-used'}">
+        <h3 class="fs-12">{$coupon->coupon->coupon_name}</h3>
+        <p class="fs-08">{$coupon->coupon->start_at}-{$coupon->coupon->end_at}</p>
         <div class="wd-100 mt-20">
+            {if condition="$coupon->coupon->goods()->count() gt 0" /}
+            商品专用：
+            {volist name="$coupon->coupon->goods" id="item"}
+            <b>{$item->goods_name}</b>
+            {/volist}
+            {elseif condition="$coupon->coupon->categories()->count() gt 0"}
+            限制以下分类：
+            {volist name="$coupon->coupon->categories" id="category"}
+            <b>{$category->category_name}</b>
+            {/volist}
+            {else}
             全场通用
+            {/if}
         </div>
+        <p class="fs-08 lh-25">
+            {if condition="$coupon->coupon->coupon_status eq 1"}
+            正常
+            {elseif condition="$coupon->coupon->coupon_status eq 3" /}
+            状态一场
+            {elseif condition="$coupon->coupon->coupon_status eq 5" /}
+            已使用
+            {else}
+            过期
+            {/if}
+        </p>
     </div>
 </div>
+{/volist}
 
-<div class="weui-flex pd-10">
-    <div class="weui-flex__item coupon-list-item-used">
-        <h3 class="fs-12">满200减38元</h3>
-        <p class="fs-08">2017.03.03-2017.03.08</p>
-        <div class="wd-100 mt-20">
-            全场通用
-        </div>
-    </div>
-</div>
+{/block}
 
+{block name="js"}
+<script src="//cdn.bootcss.com/vue/1.0.21/vue.min.js"></script>
+<script>
+    var el = new Vue({
+        el: '#app',
+        data: {
+            coupon_list: []
+        }
+    });
+</script>
 {/block}
