@@ -1,0 +1,18 @@
+.pt-10 { padding-top: 10px; }
+.pt-20 { padding-top: 20px; }
+
+.mall-menu {
+    border-right: 1px solid #eeeeee;
+}
+.mall-menu dl dt {
+    width: 100%; height: 60px; line-height: 60px; border-bottom: 1px solid #eeeeee;
+}
+.mall-menu dl dd {
+    width: 100%; height: auto;
+}
+.mall-menu dl dd ul {
+    width: 100%; height: auto;
+}
+.mall-menu dl dd ul li {
+    width: 100%; height: 45px; line-height: 45px;
+}

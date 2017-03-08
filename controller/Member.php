@@ -86,4 +86,25 @@ class Member extends Base
         return $user;
     }
 
+    public function charts()
+    {
+        $dataSource = [];
+        $startDate = strtotime('-30 days');
+        while ($startDate < time()) {
+            $where['created_at'] = ['>=', date('Y-m-d', $startDate)];
+            $where['created_at'] = ['<', date('Y-m-d', $startDate + 3600*24)];
+
+            $count = MallUsers::where($where)->count();
+
+            $dataSource['label'][] = date('m/d', $startDate);
+            $dataSource['data'][]  = $count;
+
+            $startDate += 3600 * 24;
+        }
+
+        $title = '会员统计';
+
+        return view(VIEW_PATH . '/admin/member/charts.html', compact('title', 'dataSource'));
+    }
+
 }
