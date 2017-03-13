@@ -14,9 +14,16 @@ class Coupon extends Base
         $this->loginCheck();
     }
 
-    public function index()
+    public function receive()
     {
+        $title = '领取优惠券';
 
+        return view(VIEW_PATH . '/index/coupon/list.html', compact('title'));
+    }
+
+    public function postReceive()
+    {
+        $user = AuthManage::user();
     }
 
     public function member()

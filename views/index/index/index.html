@@ -1,0 +1,100 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+{block name="css"}
+<link rel="stylesheet" href="/addons/assets/wefeemall/static/js/swiper/swiper.min.css">
+{/block}
+
+{block name="body"}
+
+<!-- 幻灯片 -->
+<div style="margin-top: 40px;">
+    <div class="weui-flex">
+        <div class="weui-flex__item swiper-container" style="height: 240px;">
+            <div class="swiper-wrapper">
+                {mall:slider}
+                <a href="{$slider->slider_url}" class="swiper-slide">
+                    <img src="{$slider->slider_photo}" width="100%" height="240">
+                </a>
+                {/mall:slider}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <div class="weui-flex pd-5 bg-fff lh-40 img-middle fs-08">
+        <div class="weui-flex__item">
+            <p><img src="/addons/assets/wefeemall/static/images/icon/right-red.png" width="18" height="18"> 30天无忧退货</p>
+        </div>
+        <div class="weui-flex__item">
+            <p><img src="/addons/assets/wefeemall/static/images/icon/right-red.png" width="18" height="18"> 48小时快速退款</p>
+        </div>
+        <div class="weui-flex__item">
+            <p><img src="/addons/assets/wefeemall/static/images/icon/right-red.png" width="18" height="18"> 品牌保证</p>
+        </div>
+    </div>
+</div>
+
+<!-- 最新商品 -->
+<div class="mt-10 mb-10 bd-t bd-b bg-fff">
+    <div class="weui-flex">
+        <div class="weui-flex__item text-c mt-10 mb-10">
+            <h4>新品首发</h4>
+        </div>
+    </div>
+    {mall:goods limit="6"}
+        {if condition="in_array($gi, [0,2,4,6])"}
+        <div class="weui-flex pl-15 pr-15">
+        {/if}
+        <div class="weui-flex__item text-c pd-5">
+            <p><img src="{$item->goods_photos[0]}" width="100%" height="100"></p>
+            <p>{$item->goods_name}</p>
+            <p><span class="cost">￥{$item->goods_now_cost}</span></p>
+        </div>
+        {if condition="in_array($gi, [1,3,5,7])"}
+            </div>
+        {/if}
+    {/mall:goods}
+</div>
+
+{mall:categories limit="5" level="2"}
+<div class="mt-10 mb-10 bd-t bd-b bg-fff">
+    <div class="weui-flex">
+        <div class="weui-flex__item text-c bd-b lh-60">
+            <h4><a href="">{$category->category_name}</a></h4>
+        </div>
+    </div>
+    {mall:goods category_id="$category->id" limit="5"}
+        {if condition="in_array($gi, [0,2,4])"}
+        <div class="weui-flex pl-15 pr-15 bd-t">
+        {/if}
+        <a class="weui-flex__item text-c pd-5 bd-r" href="#">
+            <p><img src="{$item->goods_photos[0]}" width="100%" height="100"></p>
+            <p>{$item->goods_name}</p>
+            <p><span class="cost">￥{$item->goods_now_cost}</span></p>
+        </a>
+            {if condition="$gi eq 4"}
+            <a class="weui-flex__item text-c pd-5 bd-r" href="#">
+                <p class="lh-40 mt-20">更多{$category->category_name}</p>
+                <p><img src="/addons/assets/wefeemall/static/images/icon/right-arrow.png" width="24" height="24"></p>
+            </a>
+            {/if}
+        {if condition="in_array($gi, [1,3,5])"}
+        </div>
+        {/if}
+    {/mall:goods}
+</div>
+{/mall:categories}
+
+{include file="../addons/wefeemall/views/index/common/copyright.html"}
+{/block}
+
+{block name="js"}
+<script src="/addons/assets/wefeemall/static/js/swiper/swiper.jquery.min.js"></script>
+<script>
+    $(function () {
+        new Swiper('.swiper-container', {
+            loop: true,
+            pagination: '.swiper-pagination',
+        });
+    });
+</script>
+{/block}

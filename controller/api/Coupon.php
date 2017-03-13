@@ -1,10 +1,10 @@
 <?php namespace addons\wefeemall\controller\api;
 
-use addons\wefeemall\controller\index\Base;
 use addons\wefeemall\lib\AuthManage;
 use addons\wefeemall\traits\LoginCheck;
+use think\Controller;
 
-class Coupon extends Base
+class Coupon extends Controller
 {
 
     use LoginCheck;
