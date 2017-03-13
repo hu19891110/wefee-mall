@@ -62,9 +62,9 @@ php;
         } else {
             $level = isset($tag['level']) ? (int) $tag['level'] : 1;
             if ($level == 1) {
-                $where .= '$where["fid"]=["=", '.$level.'];';
+                $where .= '$where["fid"]=["=", 0];';
             } else {
-                $where .= '$where["fid"]=["<>", '.$level.'];';
+                $where .= '$where["fid"]=["<>", 0];';
             }
         }
 

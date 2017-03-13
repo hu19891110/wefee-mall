@@ -1,0 +1,65 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+{block name="body"}
+
+<div class="category bg-fff">
+    <div class="category-left">
+        <ul>
+            {mall:categories level="1"}
+            <li class="category-list {if condition="$ci eq 0"}active{/if}" data-id="{$category->id}"><span>{$category->category_name}</span></li>
+            {/mall:categories}
+        </ul>
+    </div>
+    <div id="app" class="category-right">
+    </div>
+</div>
+
+{include file="../addons/wefeemall/views/index/common/copyright.html"}
+{/block}
+
+{block name="js"}
+<script>
+
+    $(function () {
+
+        var request = function () {
+            loading(function () {
+                $.post("{:mall_url('api.category/children')}", {
+                    fid: $('.active').attr('data-id')
+                }, function (data) {
+
+                    if (typeof (data.error) != 'undefined') {
+                        alert('获取数据失败！');
+                        return ;
+                    }
+
+                    var html = '';
+                    $.each(data.children, function (index, obj) {
+                        if (index % 4 == 0) {
+                            html += '<div class="weui-flex mt-10">';
+                        }
+                        html += '<div class="weui-flex__item pl-15">';
+                        html += ' <a href="'+ category_url(obj.id) +'">';
+                        html += '<p><img src="'+ obj.category_icon +'" width="36" height="36"></p>';
+                        html += '<p>' + obj.category_name + '</p></a></div>';
+                        if ((index + 1) % 4 == 0) {
+                            html += '</div>';
+                        }
+                    });
+
+                    $('#app').html(html);
+
+                    layer.closeAll();
+                }, 'json');
+            });
+        }
+
+        request();
+
+        $('.category-list').click(function () {
+            $(this).addClass('active').siblings().removeClass('active');
+            request();
+        });
+    });
+</script>
+{/block}

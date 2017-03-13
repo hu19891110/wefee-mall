@@ -21,6 +21,16 @@
 
 <script src="/addons/assets//wefeemall//static/js/zepto.min.js"></script>
 <script src="/addons/assets//wefeemall//static/js/wefee.js"></script>
+<script>
+    var category_url = function (id) {
+        var base = "{:mall_url('index.category/info', ['category_id' => 0])}";
+        return base.replace(0, id);
+    }
+    var goods_url = function (id) {
+        var base = "{:mall_url('index.goods/info', ['goods_id' => 0])}";
+        return base.replace(0, id);
+    }
+</script>
 {block name="js"}{/block}
 </body>
 </html>

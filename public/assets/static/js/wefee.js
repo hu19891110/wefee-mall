@@ -1,24 +1,33 @@
 document.write('<script src="/addons/assets/wefeemall/static/js/layer_mobile/layer.js"></script>');
 
-$(function () {
+var loading = function (callback) {
+	layer.open({
+		type: 2,
+		shadeClose: false,
+	});
+	callback();
+}
 
-	var alert = function (msg) {
-		layer.open({
-			content: msg
-			,skin: 'msg'
-			,time: 2
-		});
-	}
-	var confirm = function (msg, success) {
-		layer.open({
-			content: msg
-			,btn: ['确定', '取消']
-			,yes: function(index){
-				success();
-				layer.close(index);
-			}
-		});
-	}
+var alert = function (msg) {
+	layer.open({
+		content: msg
+		,skin: 'msg'
+		,time: 2
+	});
+}
+
+var confirm = function (msg, success) {
+	layer.open({
+		content: msg
+		,btn: ['确定', '取消']
+		,yes: function(index){
+			success();
+			layer.close(index);
+		}
+	});
+}
+
+$(function () {
 
 	$('.show-menu').click(function () {
 		$('.menu').toggle(500);
