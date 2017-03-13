@@ -1,0 +1,33 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+{block name="body"}
+
+<div class="weui-flex" style="margin-top: 40px;"></div>
+
+<div class="mb-10 bd-t bd-b bg-fff">
+    <div class="weui-flex">
+        <div class="weui-flex__item text-c bd-b lh-60">
+            <h4 class="img-middle">
+                <a href="{:mall_url('index.category')}">
+                    {$category->category_name} <img src="/addons/assets/wefeemall/static/images/icon/right-arrow.png" width="16" height="16">
+                </a>
+            </h4>
+        </div>
+    </div>
+    {volist name="$goods" id="item"}
+        {if condition="in_array($i, [1,3,5,7,9,11])"}
+        <div class="weui-flex pl-15 pr-15">
+        {/if}
+        <a class="weui-flex__item text-c pd-5 bd-r" href="{:mall_url('index.goods/info', ['goods_id' => $item->id])}">
+            <p><img src="{$item->goods_photos[0]}" width="100%" height="100"></p>
+            <p>{$item->goods_name}</p>
+            <p><span class="cost">￥{$item->goods_now_cost}</span></p>
+        </a>
+        {if condition="in_array($i, [2,4,6,8,10,12])"}
+            </div>
+        {/if}
+    {/volist}
+</div>
+
+{include file="../addons/wefeemall/views/index/common/copyright.html"}
+{/block}
