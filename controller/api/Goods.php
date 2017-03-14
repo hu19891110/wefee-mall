@@ -36,12 +36,12 @@ class Goods extends Controller
         return json($goods->toArray());
     }
 
-    protected function selectGoods($where = [])
+    protected function selectGoods($where = [], $order = 'created_at desc')
     {
         return $goods = MallGoods::where($where)->field([
             'id', 'goods_name', 'category_id', 'goods_photos', 'goods_stock',
             'goods_origin_cost', 'goods_now_cost', 'goods_score', 'goods_sales',
-        ])->paginate(8);
+        ])->order($order)->paginate(8);
     }
 
 }
