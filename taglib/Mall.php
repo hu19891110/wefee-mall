@@ -25,8 +25,8 @@ class Mall extends TagLib
         $php = <<<php
 <?php
 {$where}
-\$goods = \addons\wefeemall\model\MallGoods::where(\$where)->order("{$order}")->limit({$limit})->select();
-foreach(\$goods as \$gi => \$item) {
+\$goodsWefee = \addons\wefeemall\model\MallGoods::where(\$where)->order("{$order}")->limit({$limit})->select();
+foreach(\$goodsWefee as \$gi => \$item) {
 ?>
 php;
         $php .= $content;
@@ -73,8 +73,8 @@ php;
         $php = <<<php
 <?php
 {$where}
-\$categories = \addons\wefeemall\model\MallCategories::where(\$where)->order('category_sort', 'asc')->limit({$limit})->select();
-foreach (\$categories as \$ci => \$category) {
+\$categories_wefee = \addons\wefeemall\model\MallCategories::where(\$where)->order('category_sort', 'asc')->limit({$limit})->select();
+foreach (\$categories_wefee as \$ci => \$category) {
 ?>
 php;
         $php .= $content;

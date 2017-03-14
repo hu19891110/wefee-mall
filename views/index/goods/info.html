@@ -25,7 +25,7 @@
 <div class="weui-flex pd-10 bg-fff">
     <div class="weui-flex__item text-c">
         <h4 class="lh-30">{$goods->goods_name}</h4>
-        <p class="cost">￥{$goods->goods_now_cost} <span class="origin-cost">￥{$goods->goods_origin_cost}</span></p>
+        <p class="cost">￥<b class="now_cost">{$goods->goods_now_cost}</b> <span class="origin-cost">￥{$goods->goods_origin_cost}</span></p>
     </div>
 </div>
 
@@ -46,6 +46,19 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="weui-flex bg-fff bd-t bd-b lh-40">
+    <div class="weui-flex__item pl-10 pr-10">
+        <div class="left">优惠券：</div>
+        <div class="right fs-08">
+            {if condition="($goods->coupons()->count() > 0) OR ($goods->category->coupons()->count() > 0)"}
+            <a href="{:mall_url('index.coupon/index', ['goods_id' => $goods->id])}">领取优惠券！</a>
+            {else /}
+            暂无优惠券！
+            {/if}
         </div>
     </div>
 </div>
@@ -76,7 +89,7 @@
             </div>
             <div class="right">{$goods->comments()->order('created_at', 'desc')->find()->created_at}</div>
         </div>
-        <div class="lh-30 wd-100">
+        <div class="lh-30 wd-100 fs-08">
             {$goods->comments()->order('created_at', 'desc')->find()->comment_content}
         </div>
     {else /}
@@ -150,10 +163,13 @@
                     <img src="/addons/assets/wefeemall/static/images/icon/customer-service.png" width="36" height="36">
                 </div>
             </a>
-            <div class="text-c" style="width: 40%; height: 50px; float: left;">
+            <div class="text-c bd-r fs-08" style="width: 19.2%; height: 50px; float: left;">
+                ￥<span class="total">{$goods->goods_now_cost}</span>
+            </div>
+            <div class="text-c" style="width: 30%; height: 50px; float: left;">
                 立即购买
             </div>
-            <div class="text-c" style="width: 40%; height: 50px; float: right; background-color: #b4282d; color: #fff;">
+            <div class="text-c" style="width: 30%; height: 50px; float: right; background-color: #b4282d; color: #fff;">
                 加入购物车
             </div>
         </div>
@@ -173,16 +189,22 @@
             pagination: '.swiper-pagination',
         });
 
+        var total = function () {
+            $('.total').text(parseInt($('.num').text()) * parseFloat($('.now_cost').text()));
+        }
+
         $('.dec').click(function () {
             var num = parseInt($('.num').text());
             if (num > 1) {
                 $('.num').text(num - 1);
+                total();
             }
         });
 
         $('.add').click(function () {
             var num = parseInt($('.num').text());
             $('.num').text(num + 1);
+            total();
         });
 
     });
