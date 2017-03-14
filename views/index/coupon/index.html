@@ -1,0 +1,58 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+{block name="body"}
+
+<div style="margin-top: 60px;"></div>
+
+<div class="lh-30 text-c" style="color: #bbb;">点击领取</div>
+
+{if condition="!is_null($goods)"}
+{volist name="$goods->coupons" id="coupon"}
+<div class="weui-flex bd-t bg-fff mt-10 bd-b">
+    <div data-id="{$coupon->id}" class="weui-flex__item pd-15 coupon-item">
+        <div class="left">
+            <p class="lh-30">{$coupon->coupon_name}</p>
+            <p class="fs-08">{$coupon->start_at}-{$coupon->end_at}</p>
+            <p class="lh-30">限制：{$goods->goods_name}</p>
+        </div>
+    </div>
+</div>
+{/volist}
+{/if}
+
+{if condition="!is_null($category)"}
+{volist name="$category->coupons" id="coupon"}
+<div class="weui-flex bd-t bg-fff mt-10 bd-b">
+    <div data-id="{$coupon->id}" class="weui-flex__item pd-15 coupon-item">
+        <div class="left">
+            <p class="lh-30">{$coupon->coupon_name}</p>
+            <p class="fs-08">{$coupon->start_at}-{$coupon->end_at}</p>
+            <p class="lh-30">限制：{$category->category_name}</p>
+        </div>
+    </div>
+</div>
+{/volist}
+{/if}
+
+{include file="../addons/wefeemall/views/index/common/copyright.html"}
+{/block}
+
+{block name="js"}
+<script>
+    $(function () {
+        $('.coupon-item').click(function () {
+            var id = $(this).attr('data-id');
+            confirm('确认领取？', function () {
+                loading(function () {
+                    $.post("{:mall_url('api.coupon/receive')}", {coupon_id: id}, function (data) {
+                        alert(data.msg);
+                        setTimeout(function () {
+                            layer.closeAll();
+                        }, 2000);
+                    }, 'json');
+                });
+            });
+        });
+    });
+</script>
+{/block}

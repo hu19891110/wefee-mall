@@ -50,12 +50,12 @@
     </div>
 </div>
 
-<div class="weui-flex bg-fff bd-t bd-b lh-40">
+<div class="weui-flex bg-fff bd-b lh-40">
     <div class="weui-flex__item pl-10 pr-10">
         <div class="left">优惠券：</div>
         <div class="right fs-08">
             {if condition="($goods->coupons()->count() > 0) OR ($goods->category->coupons()->count() > 0)"}
-            <a href="{:mall_url('index.coupon/index', ['goods_id' => $goods->id])}">领取优惠券！</a>
+            <a style="color: orange;" href="{:mall_url('index.coupon/index', ['goods_id' => $goods->id])}">领取优惠券！</a>
             {else /}
             暂无优惠券！
             {/if}
