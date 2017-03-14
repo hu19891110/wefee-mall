@@ -23,8 +23,8 @@ class Category extends Controller
 
         $goods = $category->goods()->where([
             'goods_status' => 1,
-            'published_at' => ['<', date('Y-m-d')],
-        ])->order('created_at', 'desc')->paginate(10);
+            'published_at' => ['<', date('Y-m-d H:i:s')],
+        ])->order('created_at', 'desc')->paginate(8);
 
         $title = $category->category_name;
 
