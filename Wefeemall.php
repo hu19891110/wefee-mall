@@ -34,6 +34,9 @@ class Wefeemall extends Addons
 
         /** 安装优惠券 */
         $this->installTableCoupons();
+
+        /** 安装购物车表 */
+        $this->installTableMalls();
     }
 
     protected function template()
@@ -186,6 +189,8 @@ class Wefeemall extends Addons
         $this->uninstallTableFeedback();
 
         $this->uninstallTableCoupons();
+
+        $this->uninstallTableMalls();
     }
 
     protected function uninstallTableUsers()
@@ -225,9 +230,7 @@ class Wefeemall extends Addons
 
     public function upgrade()
     {
-        $this->installTableFeedback();
-
-        $this->installTableCoupons();
+        $this->installTableMalls();
     }
 
     protected function installTableFeedback()
@@ -306,6 +309,26 @@ class Wefeemall extends Addons
         Db::execute('DROP TABLE IF EXISTS '.full_table('mall_coupon_category').';');
         Db::execute('DROP TABLE IF EXISTS '.full_table('mall_coupon_goods').';');
         Db::execute('DROP TABLE IF EXISTS '.full_table('mall_coupon_users').';');
+    }
+
+    protected function installTableMalls()
+    {
+        Db::execute('
+        CREATE TABLE IF NOT EXISTS '.full_table('mall_malls').'(
+        `id` int(11) unsigned not null AUTO_INCREMENT,
+        `user_id` int(11) unsigned not null,
+        `goods_id` int(11) unsigned not null,
+        `goods_num` smallint(5) unsigned default 1 not null,
+        `created_at` timestamp,
+        `updated_at` timestamp,
+        PRIMARY KEY(`id`)
+        )ENGINE=MyISAM DEFAULT CHARSET=utf8;
+        ');
+    }
+
+    protected function uninstallTableMalls()
+    {
+        Db::execute('DROP TABLE IF EXISTS '.full_table('mall_malls').';');
     }
 
 }

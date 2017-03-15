@@ -39,4 +39,9 @@ class MallGoods extends BaseModel
         return unserialize($value);
     }
 
+    public function malls()
+    {
+        return $this->hasMany('addons\wefeemall\model\MallMalls', 'goods_id');
+    }
+
 }

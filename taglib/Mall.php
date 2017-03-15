@@ -1,5 +1,6 @@
 <?php namespace addons\wefeemall\taglib;
 
+use addons\wefeemall\lib\AuthManage;
 use think\template\TagLib;
 
 class Mall extends TagLib
@@ -9,6 +10,7 @@ class Mall extends TagLib
         'goods' => ['attr' => 'category_id,order,limit', 'close' => 1],
         'slider' => ['attr' => '', 'close' => 1],
         'categories' => ['attr' => 'fid,level,limit', 'close' => 1],
+        'mall' => ['attr' => '', 'close' => 0],
     ];
 
     public function tagGoods($tag, $content)
@@ -81,6 +83,13 @@ php;
         $php .= '<?php } ?>';
 
         return $php;
+    }
+
+    public function tagMall($tag)
+    {
+        $num = AuthManage::check() ? AuthManage::user()->malls()->count() : 0;
+
+        return $num;
     }
 
 }

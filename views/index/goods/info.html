@@ -179,7 +179,7 @@
             <div class="text-c" style="width: 30%; height: 50px; float: left;">
                 立即购买
             </div>
-            <div class="text-c" style="width: 30%; height: 50px; float: right; background-color: #b4282d; color: #fff;">
+            <div class="text-c add-malls" style="width: 30%; height: 50px; float: right; background-color: #b4282d; color: #fff;">
                 加入购物车
             </div>
         </div>
@@ -227,6 +227,22 @@
         });
         $("#gallery").on("click", function(){
             $("#gallery").fadeOut(100);
+        });
+
+
+        $('.add-malls').click(function () {
+            var num = parseInt($('.num').text()),goods_id="{$goods->id}";
+            loading(function () {
+                $.post("{:mall_url('api.mall/add')}", {
+                    goods_id: goods_id,
+                    num: num,
+                }, function (data) {
+                    alert(data.msg);
+                    setTimeout(function () {
+                        layer.closeAll();
+                    }, 1000)
+                }, 'json');
+            });
         });
 
     });
