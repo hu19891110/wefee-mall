@@ -14,4 +14,14 @@ class MallGoodsComments extends BaseModel
         return $this->belongsTo('addons\wefeemall\model\MallGoods', 'goods_id');
     }
 
+    public function setCommentPhotosAttr($value)
+    {
+        return serialize($value);
+    }
+
+    public function getCommentPhotosAttr($value)
+    {
+        return unserialize($value);
+    }
+
 }

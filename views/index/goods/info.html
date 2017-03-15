@@ -75,23 +75,33 @@
     </div>
 </div>
 
-<div class="weui-flex mt-20 bg-fff bd-t bd-b">
+<div class="weui-flex mt-20 bg-fff bd-t bd-b comments-box">
     <div class="weui-flex__item pl-15 pr-15">
         <div class="lh-40 wd-100 bd-b">
             <div class="left">评价({$goods->comments()->count()})</div>
-            <div class="right">查看全部评价</div>
+            <a class="right" href="{:mall_url('index.comment', ['goods_id' => $goods->id])}">查看全部评价</a>
         </div>
         {if condition="$goods->comments()->count()"}
+        {php}$comment = $goods->comments()->order('created_at', 'desc')->find(){/php}
         <div class="lh-60 wd-100 fs-08">
             <div class="left img-middle">
-                <img src="{$goods->comments()->order('created_at', 'desc')->find()->user->avatar}" width="50" height="50">
-                {$goods->comments()->order('created_at', 'desc')->find()->user->nickname}
+                <img src="{$comment->user->avatar}" width="50" height="50">
+                {$comment->user->nickname}
             </div>
-            <div class="right">{$goods->comments()->order('created_at', 'desc')->find()->created_at}</div>
+            <div class="right">{$comment->created_at}</div>
         </div>
         <div class="lh-30 wd-100 fs-08">
-            {$goods->comments()->order('created_at', 'desc')->find()->comment_content}
+            {$comment->comment_content}
         </div>
+        {if condition="$comment->comment_photos"}
+        <div class="wd-100 photos-box">
+            <ul>
+                {volist name="$comment->comment_photos" id="photo"}
+                <li class="left"><img src="{$photo}" width="60" height="60" class="mt-5 mr-5"></li>
+                {/volist}
+            </ul>
+        </div>
+        {/if}
     {else /}
         <div class="lh-60 wd-100 text-c">
             <p>暂无评价！</p>
@@ -177,6 +187,10 @@
 </div>
 
 <div style="height: 50px;"></div>
+<div class="weui-gallery" id="gallery">
+    <span class="weui-gallery__img" id="galleryImg"></span>
+</div>
+
 
 {/block}
 
@@ -205,6 +219,14 @@
             var num = parseInt($('.num').text());
             $('.num').text(num + 1);
             total();
+        });
+
+        $('.comments-box').on("click", "img", function(){
+            $("#galleryImg").attr("style", 'background-image: url("'+ $(this).attr('src') +'")');
+            $("#gallery").fadeIn(100);
+        });
+        $("#gallery").on("click", function(){
+            $("#gallery").fadeOut(100);
         });
 
     });

@@ -1,0 +1,135 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+{block name="css"}
+<link rel="stylesheet" href="/addons/assets/wefeemall/static/js/dropload/dropload.css">
+<style>
+    .active { color: darkred; }
+    ul li { list-style: none; }
+</style>
+{/block}
+
+{block name="body"}
+
+<div style="margin-top: 40px;"></div>
+
+<div class="weui-flex lh-40 bg-fff bd-b">
+    <div class="weui-flex__item text-c active tab" data-id="">
+        全部({$goods->comments()->count()})
+    </div>
+    <div class="weui-flex__item text-c tab" data-id="image">
+        有图({$goods->comments()->where('comment_photos', '<>', "")->count()})
+    </div>
+</div>
+
+<div id="container">
+    {volist name="$comments" id="comment"}
+    <div class="weui-flex bg-fff bd-b">
+        <div class="weui-flex__item pl-15 pr-15">
+            <div class="lh-60 wd-100 fs-08">
+                <div class="left img-middle">
+                    <img src="{$comment->user->avatar}" width="50" height="50"> {$comment->user->nickname}
+                </div>
+                <div class="right">{$comment->created_at}</div>
+            </div>
+            <div class="lh-30 wd-100 fs-08">
+                {$comment->comment_content}
+            </div>
+            {if condition="$comment->comment_photos"}
+            <div class="wd-100 photos-box">
+                <ul>
+                    {volist name="$comment->comment_photos" id="photo"}
+                    <li class="left"><img src="{$photo}" width="60" height="60" class="mt-5 mr-5"></li>
+                    {/volist}
+                </ul>
+            </div>
+            {/if}
+        </div>
+    </div>
+    {/volist}
+</div>
+
+<div class="weui-gallery" id="gallery">
+    <span class="weui-gallery__img" id="galleryImg"></span>
+</div>
+
+{/block}
+
+{block name="js"}
+<script src="/addons/assets/wefeemall/static/js/dropload/dropload.min.js"></script>
+<script>
+    $(function () {
+
+        var page = 2;
+
+        var template = function (data) {
+            var html = '';
+            $.each(data, function (ind,obj) {
+                html += '<div class="weui-flex bg-fff bd-b">';
+                html += '<div class="weui-flex__item pl-15 pr-15">';
+                html += '<div class="lh-60 wd-100 fs-08">';
+                html += '<div class="left img-middle">';
+                html += '<img src="'+ obj.user.avatar +'" width="50" height="50">' + obj.user.username;
+                html += '</div>';
+                html += '<div class="right">'+ obj.created_at +'</div>';
+                html += '</div>';
+                html += '<div class="lh-30 wd-100 fs-08">' + obj.comment_content + '</div>';
+                if (obj.comment_photos != 'false') {
+                    html += '<div class="wd-100 photos-box"><ul>';
+                    $.each(obj.comment_photos, function (i, photo) {
+                        html += '<li class="left"><img src="'+ photo +'" width="60" height="60" class="mt-5 mr-5"></li>';
+                    });
+                    html += "</ul></div>";
+                }
+                html += '</div></div>';
+            });
+
+            return html;
+        }
+
+        $('body').dropload({
+            scrollArea : window,
+            autoLoad: false,
+            loadDownFn : function(me){
+                $.post('{:mall_url("api.comment/select")}?page=' + page, {
+                    goods_id: "{$goods->id}",
+                    type: $('.active').attr('data-id'),
+                }, function(data){
+                    page = parseInt(data.current_page) + 1;
+                    if (data.data.length == 0) {
+                        me.lock();
+                        me.noData();
+                        me.resetload();
+                        return ;
+                    }
+                    $('#container').append(template(data.data));
+                    me.resetload();
+                }, 'json');
+            }
+        });
+
+
+        $('#container').on("click", "img", function(){
+            $("#galleryImg").attr("style", 'background-image: url("'+ $(this).attr('src') +'")');
+            $("#gallery").fadeIn(100);
+        });
+        $("#gallery").on("click", function(){
+            $("#gallery").fadeOut(100);
+        });
+
+        $('.tab').click(function () {
+            $(this).addClass('active').siblings().removeClass('active');
+            loading(function () {
+                $('#container').html('');
+                $.post('{:mall_url("api.comment/select")}?page=1', {
+                    goods_id: "{$goods->id}",
+                    type: $('.active').attr('data-id'),
+                }, function(data){
+                    $('#container').append(template(data.data));
+                    layer.closeAll();
+                }, 'json');
+            });
+        });
+
+    });
+</script>
+{/block}
