@@ -27,7 +27,7 @@ class Wefeemall extends Addons
         $this->installTableSliders();
 
         /** 安装订单表 */
-
+        $this->installTableOrders();
 
         /** 安装反馈表 */
         $this->installTableFeedback();
@@ -191,6 +191,8 @@ class Wefeemall extends Addons
         $this->uninstallTableCoupons();
 
         $this->uninstallTableMalls();
+
+        $this->uninstallTableOrders();
     }
 
     protected function uninstallTableUsers()
@@ -223,14 +225,9 @@ class Wefeemall extends Addons
         Db::execute('DROP TABLE IF EXISTS '.full_table('mall_user_address').';');
     }
 
-    protected function uninstallTableOrders()
-    {
-        Db::execute('DROP TABLE IF EXISTS '.full_table('mall_orders').';');
-    }
-
     public function upgrade()
     {
-        $this->installTableMalls();
+        $this->installTableOrders();
     }
 
     protected function installTableFeedback()
@@ -329,6 +326,60 @@ class Wefeemall extends Addons
     protected function uninstallTableMalls()
     {
         Db::execute('DROP TABLE IF EXISTS '.full_table('mall_malls').';');
+    }
+
+    protected function installTableOrders()
+    {
+        Db::execute('
+        CREATE TABLE IF NOT EXISTS '.full_table('mall_orders').'(
+        `id` int(11) unsigned not null AUTO_INCREMENT,
+        `orderid` varchar(32) not null comment "订单编号",
+        `user_id` int(11) unsigned not null,
+        `origin_charge` decimal(10,2) unsigned not null comment "原价",
+        `now_charge` decimal(10,2) unsigned not null comment "现价",
+        `coupon_id` int(11) unsigned default 0 not null comment "优惠券",
+        `coupon_cost` decimal(10,2) unsigned default 0 not null comment "优惠券价格",
+        `del_cost` decimal(10,2) unsigned default 0 not null comment "运费",
+        `order_status` smallint(3) unsigned default 1 not null comment "1未支付,5已支付,9已发货,13已收货,17已收货",
+        `created_at` timestamp,
+        `updated_at` timestamp,
+        `deleted_at` timestamp,
+        PRIMARY KEY(`id`)
+        )ENGINE=MyISAM DEFAULT CHARSET=utf8;
+        ');
+
+        Db::execute('
+        CREATE TABLE IF NOT EXISTS '.full_table('mall_order_address').'(
+        `id` int(11) unsigned not null AUTO_INCREMENT,
+        `order_id` int(11) unsigned not null,
+        `contact_name` varchar(12) not null comment "联系名",
+        `contact_phone` varchar(24) not null comment "联系方式",
+        `address` varchar(255) not null comment "地址",
+        `del_company` varchar(24) default "" not null comment "物流公司",
+        `del_number` varchar(64) default "" not null comment "物流编号",
+        `created_at` timestamp,
+        `updated_at` timestamp,
+        PRIMARY KEY(`id`)
+        )ENGINE=MyISAM DEFAULT CHARSET=utf8;
+        ');
+
+        Db::execute('
+        CREATE TABLE IF NOT EXISTS '.full_table('mall_order_goods').'(
+        `id` int(11) unsigned not null AUTO_INCREMENT,
+        `order_id` int(11) unsigned not null,
+        `goods_id` int(11) unsigned not null,
+        `goods_charge` decimal(10,2) unsigned not null,
+        `goods_num` smallint(5) unsigned not null,
+        PRIMARY KEY(`id`)
+        )ENGINE=MyISAM DEFAULT CHARSET=utf8;
+        ');
+    }
+
+    protected function uninstallTableOrder()
+    {
+        Db::execute('DROP TABLE IF EXISTS '.full_table('mall_orders').';');
+        Db::execute('DROP TABLE IF EXISTS '.full_table('mall_order_address').';');
+        Db::execute('DROP TABLE IF EXISTS '.full_table('mall_order_goods').';');
     }
 
 }

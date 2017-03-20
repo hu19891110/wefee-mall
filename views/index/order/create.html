@@ -110,15 +110,15 @@
 </div>
 
 <div id="address">
-    {volist name="$user->address" id="address"}
-    <div class="weui-flex bd-b select-address-item" data-id="{$address->id}">
+    {volist name="$user->address" id="item"}
+    <div class="weui-flex bd-b select-address-item" data-id="{$item->id}">
         <div class="weui-flex__item pd-10 bg-fff bd-b">
             <div class="left" style="width: 25%;">
-                {$address->true_name}
+                {$item->true_name}
             </div>
             <div class="left fs-08" style="width: 60%;">
-                <p>{$address->contact_phone}</p>
-                <p class="lh-30">{$address->province}{$address->city}{$address->region}{$address->street}</p>
+                <p>{$item->contact_phone}</p>
+                <p class="lh-30">{$item->province}{$item->city}{$item->region}{$item->street}</p>
             </div>
             <div class="right lh-60 text-r" style="width: 15%">
                 <img src="/addons/assets/wefeemall/static/images/icon/right-arrow-menu.png" width="20" height="24">
@@ -137,11 +137,11 @@
     <div class="weui-flex bd-b coupon-item" data-id="{$coupon->id}">
         <div class="weui-flex__item bg-fff pd-10">
             <div class="wd-100 left coupon-name">
-                {$coupon->coupon_name}
+                {$coupon->coupon->coupon_name}
             </div>
             <div class="left wd-100 fs-08">
-                <p>￥<span class="coupon-cost">{$coupon->coupon_cost}</span></p>
-                <p class="fs-08 coupon-range-date">{$coupon->start_at}~{$coupon->end_at}</p>
+                <p>￥<span class="coupon-cost">{$coupon->coupon->coupon_cost}</span></p>
+                <p class="fs-08 coupon-range-date">{$coupon->coupon->start_at}~{$coupon->coupon->end_at}</p>
             </div>
         </div>
     </div>
@@ -152,7 +152,16 @@
     <a href="javascript:void(0);" class="no-use-coupon">不使用优惠券</a>
 </div>
 
-<input type="hidden" name="coupon_id" value="">
+<form action="{:mall_url('index.order/post')}" style="display: none" method="post">
+    {:token()}
+    <input type="hidden" name="coupon_id" value="">
+    <input type="hidden" name="address_id" value="{$address->id}">
+    {volist name="mall" id="item"}
+    <input type="hidden" name="goods_id[]" value="{$item['goods']->id}">
+    <input type="hidden" name="num[]" value="{$item['num']}">
+    {/volist}
+    <button type="submit"></button>
+</form>
 
 {/block}
 
@@ -178,6 +187,7 @@
         });
 
         $('.select-address-item').click(function () {
+            $('input[name="address_id"]').val($(this).attr('data-id'));
             $('.select-address').html($(this).html());
             $('.select-address').attr('data-id', $(this).attr('data-id'));
             $('#address').hide();
@@ -219,6 +229,13 @@
             $('#main').show();
             $('.create-order-footer-menu').show();
         });
+
+        $('.go-pay').click(function () {
+            confirm('确定购买？', function () {
+                $('button[type="submit"]').click();
+            });
+        });
+
     });
 </script>
 {/block}

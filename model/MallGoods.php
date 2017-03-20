@@ -44,4 +44,9 @@ class MallGoods extends BaseModel
         return $this->hasMany('addons\wefeemall\model\MallMalls', 'goods_id');
     }
 
+    public function orders()
+    {
+        return $this->belongsToMany('addons\wefeemall\model\MallOrders', full_table('mall_order_goods'), 'order_id', 'goods_id');
+    }
+
 }
