@@ -25,7 +25,30 @@
                         <div class="tab-content" style="padding-top: 20px;">
                             <div role="tabpanel" class="tab-pane active" id="base">
 
-                                {wefee:image title="默认头像" name="user_default_avatar" value=":get_addon_config($addons['addons_sign'], 'user_default_avatar')" /}
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">免邮费</label>
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">满</div>
+                                            <input type="text" name="free_del_inf" class="form-control" value="{:get_addon_config($addons['addons_sign'], 'free_del_inf')}">
+                                            <div class="input-group-addon">元</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">邮费</label>
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <input type="text" name="del_cost" class="form-control" value="{:get_addon_config($addons['addons_sign'], 'del_cost')}">
+                                            <div class="input-group-addon">元</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                {wefee:image title="用户默认头像" name="user_default_avatar" value=":get_addon_config($addons['addons_sign'], 'user_default_avatar')" /}
 
                                 <div class="form-group">
                                     <label class="control-label col-sm-2">美洽客服聊天地址</label>

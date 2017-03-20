@@ -25,6 +25,10 @@ class Order extends Base
             $total += $item['num'] * $item['goods']->goods_now_cost;
         }
 
+        /** 是否免邮 */
+        $free_del_inf = mall_config('free_del_inf');
+        $isFreeDel = $total > $free_del_inf ? 0 : mall_config('del_cost');
+
         $user = AuthManage::user();
 
         /** 默认地址 */
@@ -35,7 +39,7 @@ class Order extends Base
 
         $title = '下订单';
 
-        return view(VIEW_PATH . '/index/order/create.html', compact('title', 'coupons', 'address', 'user', 'total', 'mall'));
+        return view(VIEW_PATH . '/index/order/create.html', compact('title', 'coupons', 'address', 'user', 'isFreeDel', 'total', 'mall'));
     }
 
     /** 获取提交来的购物车信息 */
