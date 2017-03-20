@@ -33,13 +33,13 @@
         </div>
     </div>
 
-    <div class="weui-flex mt-10 bd-t bd-b">
+    <div class="weui-flex mt-10 bd-t bd-b select-coupon">
         <div class="weui-flex__item bg-fff lh-50 pl-10 pr-10">
             <div class="left">
                 请选择优惠券
             </div>
             <div class="right img-middle">
-                暂无!
+                <span class="selected-coupon-name">无</span>
                 <img src="/addons/assets/wefeemall/static/images/icon/right-arrow-menu.png" width="20" height="24">
             </div>
         </div>
@@ -49,11 +49,11 @@
         <div class="weui-flex__item pl-10 pr-10">
             <div class="wd-100 left lh-50 bd-b">
                 <div class="left">商品合计</div>
-                <div class="right">￥120232</div>
+                <div class="right">￥<span id="total-cost">{$total}</span></div>
             </div>
             <div class="wd-100 left lh-50 bd-b">
                 <div class="left">优惠券</div>
-                <div class="right">-￥10</div>
+                <div class="right">-￥<span id="coupon-cost">0</span></div>
             </div>
             <div class="wd-100 left lh-50 bd-b">
                 <div class="left">运费</div>
@@ -93,7 +93,7 @@
     <div class="weui-flex">
         <div class="weui-flex__item lh-50 pl-10">
             <div class="left" style="color: #b4282d;">
-                实付：￥<span class="total">1025.80</span>
+                实付：￥<span class="total-use-cost">{$total}</span>
             </div>
             <div class="right">
                 <a class="go-pay">去付款</a>
@@ -126,20 +126,26 @@
 </div>
 
 <div id="coupons">
-    <div class="weui-flex bd-b">
+    {volist name="coupons" id="coupon"}
+    <div class="weui-flex bd-b coupon-item" data-id="{$coupon->id}">
         <div class="weui-flex__item bg-fff pd-10">
-            <div class="wd-100 left">
-                我是优惠券名
-            </div>
-            <div class="left wd-100">
-                限制分类：内衣
+            <div class="wd-100 left coupon-name">
+                {$coupon->coupon_name}
             </div>
             <div class="left wd-100 fs-08">
-                2017年
+                <p>￥<span class="coupon-cost">{$coupon->coupon_cost}</span></p>
+                <p class="fs-08 coupon-range-date">{$coupon->start_at}~{$coupon->end_at}</p>
             </div>
         </div>
     </div>
+    {/volist}
 </div>
+
+<div class="my-address-menu no-use-coupon">
+    <a href="javascript:void(0);" class="no-use-coupon">不使用优惠券</a>
+</div>
+
+<input type="hidden" name="coupon_id" value="">
 
 {/block}
 
@@ -147,17 +153,62 @@
 <script>
     $(function () {
 
+        var total = function () {
+            var origin_total = parseFloat($('#total-cost').text());
+            var coupon_cost = parseFloat($('#coupon-cost').text());
+
+            var now_cost = origin_total - coupon_cost;
+            now_cost = now_cost < 0 ? 0 : now_cost;
+
+            $('.total-use-cost').text(now_cost);
+        }
+
         $('.select-address').click(function () {
             $('#main').hide();
             $('.create-order-footer-menu').hide();
             $('#address').show();
             $('.my-address-menu').show();
         });
+
         $('.select-address-item').click(function () {
             $('.select-address').html($(this).html());
             $('.select-address').attr('data-id', $(this).attr('data-id'));
             $('#address').hide();
             $('.my-address-menu').hide();
+            $('#main').show();
+            $('.create-order-footer-menu').show();
+        });
+
+        $('.select-coupon').click(function () {
+            $('#main').hide();
+            $('.create-order-footer-menu').hide();
+            $('#coupons').show();
+            $('.no-use-coupon').show();
+        });
+
+        $('.coupon-item').click(function () {
+            $('input[name="coupon_id"]').val($(this).attr('data-id'));
+            var coupon_name = $(this).find('.coupon-name').text(),coupon_cost=$(this).find('.coupon-cost').text();
+            $('.selected-coupon-name').text(coupon_name);
+            $('#coupon-cost').text(coupon_cost);
+
+            total();
+
+            $('#coupons').hide();
+            $('.no-use-coupon').hide();
+            $('#main').show();
+            $('.create-order-footer-menu').show();
+        });
+
+        $('.no-use-coupon').click(function () {
+            $('input[name="coupon_id"]').val('');
+            $('.selected-coupon-name').text('不使用');
+            $('#coupon-cost').text(0);
+
+            total();
+
+            $('#coupons').hide();
+            $('.no-use-coupon').hide();
             $('#main').show();
             $('.create-order-footer-menu').show();
         });

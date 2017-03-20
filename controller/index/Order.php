@@ -19,16 +19,26 @@ class Order extends Base
     {
         $mall = $this->getMall();
 
+        /** 总价计算 */
+        $total = 0;
+        foreach ($mall as $item) {
+            $total += $item['num'] * $item['goods']->goods_now_cost;
+        }
+
         $user = AuthManage::user();
 
         /** 默认地址 */
         $address = $user->address()->order('is_default', 'desc')->find();
 
+        /** 优惠券 */
+        $coupons = $this->getCanUseCoupon($mall);
+
         $title = '下订单';
 
-        return view(VIEW_PATH . '/index/order/create.html', compact('title', 'address', '', 'user', 'mall'));
+        return view(VIEW_PATH . '/index/order/create.html', compact('title', 'coupons', 'address', 'user', 'total', 'mall'));
     }
 
+    /** 获取提交来的购物车信息 */
     protected function getMall()
     {
         if (! request()->isPost() && session('mall')) {
@@ -58,6 +68,31 @@ class Order extends Base
         session('mall', $mall);
 
         return $mall;
+    }
+
+    /**
+     * 在当前购物车下，可以使用的优惠券
+     * 1.有分类限制的所有商品必须同分类
+     * 2.无分类，无商品限制
+     */
+    public function getCanUseCoupon(array $mall)
+    {
+        $total = 0;
+        foreach ($mall as $item) {
+            $total += $item['num'] * $item['goods']->goods_now_cost;
+        }
+
+        $coupons = AuthManage::user()->coupons()->where('status', 1)->select();
+
+        $can = [];
+
+        foreach ($coupons as $coupon) {
+            if ($total > $coupon->coupon->coupon_inf) {
+                $can[] = $coupon->coupon;
+            }
+        }
+
+        return $can;
     }
 
 }
