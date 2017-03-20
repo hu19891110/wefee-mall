@@ -10,6 +10,13 @@
     .create-order-footer-menu .go-pay {
         display: inline-block; width: 100px; height: 50px; line-height: 50px; text-align: center; background-color: #b4282d; color: #fff;
     }
+    .no-use-coupon {
+        position: fixed; z-index: 12; bottom: 0px; left: 0px; right: 0px; height: 50px; line-height: 50px;
+        text-align: center; background-color: #b4282d; display: none;
+    }
+    .no-use-coupon a {
+        display: inline-block; width: 100%; height: 50px; color: #FFF;
+    }
 </style>
 {/block}
 
@@ -141,7 +148,7 @@
     {/volist}
 </div>
 
-<div class="my-address-menu no-use-coupon">
+<div class="no-use-coupon">
     <a href="javascript:void(0);" class="no-use-coupon">不使用优惠券</a>
 </div>
 
