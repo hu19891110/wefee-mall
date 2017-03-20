@@ -10,6 +10,7 @@
     <div class="weui-flex__item">
         <div class="weui-cells weui-cells_form">
             <form action="{:aurl('wefeemall/index.member/postCreateAddress')}" method="post">
+                <input type="hidden" name="referer" value="{:request()->param('referer') != '' ? request()->param('referer') : ''}">
                 <div class="weui-cell">
                     <input class="weui-input" type="text" name="true_name" placeholder="姓名"/>
                 </div>

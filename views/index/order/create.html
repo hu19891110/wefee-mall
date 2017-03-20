@@ -1,0 +1,166 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+{block name="css"}
+<style>
+    #address,#coupons,.my-address-menu { display: none; }
+    .create-order-footer-menu {
+        position: fixed; bottom: 0px; left: 0px; right: 0px;
+        height: 50px; background-color: #fff; border-top: 1px solid #eee;
+    }
+    .create-order-footer-menu .go-pay {
+        display: inline-block; width: 100px; height: 50px; line-height: 50px; text-align: center; background-color: #b4282d; color: #fff;
+    }
+</style>
+{/block}
+
+{block name="body"}
+
+<div style="margin-top: 40px;"></div>
+
+<div id="main">
+    <div class="weui-flex select-address" data-id="{$address->id}" style="background: url('/static/images/address-bg.png') repeat-x; padding-top: 5px;">
+        <div class="weui-flex__item pd-10 bg-fff bd-b">
+            <div class="left" style="width: 25%;">
+                {$address->true_name}
+            </div>
+            <div class="left fs-08" style="width: 60%;">
+                <p>{$address->contact_phone}</p>
+                <p class="lh-30">{$address->province}{$address->city}{$address->region}{$address->street}</p>
+            </div>
+            <div class="right lh-60 text-r" style="width: 15%">
+                <img src="/addons/assets/wefeemall/static/images/icon/right-arrow-menu.png" width="20" height="24">
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-flex mt-10 bd-t bd-b">
+        <div class="weui-flex__item bg-fff lh-50 pl-10 pr-10">
+            <div class="left">
+                请选择优惠券
+            </div>
+            <div class="right img-middle">
+                暂无!
+                <img src="/addons/assets/wefeemall/static/images/icon/right-arrow-menu.png" width="20" height="24">
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-flex bg-fff bd-t bd-b mt-10">
+        <div class="weui-flex__item pl-10 pr-10">
+            <div class="wd-100 left lh-50 bd-b">
+                <div class="left">商品合计</div>
+                <div class="right">￥120232</div>
+            </div>
+            <div class="wd-100 left lh-50 bd-b">
+                <div class="left">优惠券</div>
+                <div class="right">-￥10</div>
+            </div>
+            <div class="wd-100 left lh-50 bd-b">
+                <div class="left">运费</div>
+                <div class="right">￥0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-flex mt-10 bd-t bd-b">
+        <div class="weui-flex__item pd-10 bg-fff">
+
+            {volist name="mall" id="goods"}
+            <div class="weui-flex pl-10 pr-10 bd-b">
+                <div class="weui-flex__item mall-goods-item pt-10 pd-10">
+                    <div class="goods-logo">
+                        <img src="{$goods['goods']->goods_photos[0]}" width="60" height="60">
+                    </div>
+                    <div class="goods-title-price">
+                        <p class="lh-40">{$goods['goods']->goods_name}</p>
+                        <p class="cost lh-20">￥{$goods['goods']->goods_now_cost}</p>
+                    </div>
+                    <div class="goods-nums">
+                        <p>x{$goods['num']}</p>
+                    </div>
+                </div>
+            </div>
+            {/volist}
+
+        </div>
+    </div>
+
+    <div style="margin-bottom: 60px;"></div>
+
+</div>
+
+<div class="create-order-footer-menu">
+    <div class="weui-flex">
+        <div class="weui-flex__item lh-50 pl-10">
+            <div class="left" style="color: #b4282d;">
+                实付：￥<span class="total">1025.80</span>
+            </div>
+            <div class="right">
+                <a class="go-pay">去付款</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="address">
+    {volist name="$user->address" id="address"}
+    <div class="weui-flex bd-b select-address-item" data-id="{$address->id}">
+        <div class="weui-flex__item pd-10 bg-fff bd-b">
+            <div class="left" style="width: 25%;">
+                {$address->true_name}
+            </div>
+            <div class="left fs-08" style="width: 60%;">
+                <p>{$address->contact_phone}</p>
+                <p class="lh-30">{$address->province}{$address->city}{$address->region}{$address->street}</p>
+            </div>
+            <div class="right lh-60 text-r" style="width: 15%">
+                <img src="/addons/assets/wefeemall/static/images/icon/right-arrow-menu.png" width="20" height="24">
+            </div>
+        </div>
+    </div>
+    {/volist}
+</div>
+
+<div class="my-address-menu">
+    <a href="{:aurl('wefeemall/index.member/addAddress', ['referer' => urlencode(mall_url('index.order/create'))])}">新建</a>
+</div>
+
+<div id="coupons">
+    <div class="weui-flex bd-b">
+        <div class="weui-flex__item bg-fff pd-10">
+            <div class="wd-100 left">
+                我是优惠券名
+            </div>
+            <div class="left wd-100">
+                限制分类：内衣
+            </div>
+            <div class="left wd-100 fs-08">
+                2017年
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}
+
+{block name="js"}
+<script>
+    $(function () {
+
+        $('.select-address').click(function () {
+            $('#main').hide();
+            $('.create-order-footer-menu').hide();
+            $('#address').show();
+            $('.my-address-menu').show();
+        });
+        $('.select-address-item').click(function () {
+            $('.select-address').html($(this).html());
+            $('.select-address').attr('data-id', $(this).attr('data-id'));
+            $('#address').hide();
+            $('.my-address-menu').hide();
+            $('#main').show();
+            $('.create-order-footer-menu').show();
+        });
+    });
+</script>
+{/block}

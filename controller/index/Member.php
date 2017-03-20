@@ -66,6 +66,10 @@ class Member extends Base
             MallUserAddress::where('id', '<>', $address->id)->update(['is_default' => 0]);
         }
 
+        if (request()->param('referer') != '') {
+            return redirect(urldecode(request()->param('referer')));
+        }
+
         $this->success('添加成功', mall_url('index.member/myAddress'));
     }
 

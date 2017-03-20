@@ -44,6 +44,8 @@
     </div>
 </div>
 
+<form action="{:mall_url('index.order/create')}" method="post">
+
 {if condition="$user->malls"}
 <div class="mt-5 bd-t bd-b">
     {volist name="$user->malls" id="item"}
@@ -53,7 +55,7 @@
                 <input type="checkbox" name="goods_id[]" value="{$item->goods_id}" checked="checked">
             </div>
             <div class="goods-logo">
-                <a href="{:mall_url('index.goods/info', ['id' => $item->goods_id])}">
+                <a href="{:mall_url('index.goods/info', ['goods_id' => $item->goods_id])}">
                     <img src="{$item->goods->goods_photos[0]}" width="60" height="60">
                 </a>
             </div>
@@ -73,6 +75,8 @@
                             </div>
                             <div class="weui-flex__item">
                                 <span class="num" data-id="{$item->id}">{$item->goods_num}</span>
+                                <input type="hidden" id="id-{$item->id}" name="id[]" value="{$item->goods_id}">
+                                <input type="hidden" id="num-{$item->id}" name="num[]" value="{$item->goods_num}">
                             </div>
                             <div class="weui-flex__item">
                                 <img class="add" data-id="{$item->id}" src="/addons/assets/wefeemall/static/images/icon/add.png" width="16" height="16">
@@ -105,6 +109,10 @@
         </div>
     </div>
 </div>
+
+    <button type="submit" style="display: none"></button>
+
+</form>
 
 <script src="/addons/assets//wefeemall//static/js/zepto.min.js"></script>
 <script src="/addons/assets//wefeemall//static/js/wefee.js"></script>
@@ -150,6 +158,7 @@
                 var old = parseInt($(obj).text());
                 var newD = old + 1;
                 $(obj).text(newD);
+                $('#num-'+id).val(newD);
             });
             total();
         });
@@ -173,9 +182,14 @@
                     var old = parseInt($(obj).text());
                     var newD = old - 1;
                     $(obj).text(newD);
+                    $('#num-'+id).val(newD);
                 });
             }
             total();
+        });
+
+        $('.create-order-button').click(function () {
+            $('button[type="submit"]').click();
         });
 
     });
