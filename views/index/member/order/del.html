@@ -1,0 +1,33 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+{block name="body"}
+
+<div style="margin-top: 40px;"></div>
+
+<div class="weui-flex bg-fff">
+    <div class="weui-flex__item bd-b pd-5">
+        <div class="wd-100 lh-30">物流公司：{$order->address->del_company}</div>
+        <div class="wd-100 lh-30">物流编号：{$order->address->del_number}</div>
+    </div>
+</div>
+
+<div class="weui-flex bg-fff">
+    <div class="weui-flex__item pd-10">
+        <ul>
+            {if condition="is_null($del)"}
+            <li>
+                <p class="text-c">暂无记录！</p>
+            </li>
+            {else}
+            {volist name="$del" id="item"}
+            <li class="lh-30 bd-b" {if condition="($i == count($del))"}style="color: green;"{/if}>
+                <p>{$item.datetime}</p>
+                <p>{$item.remark}</p>
+            </li>
+            {/volist}
+            {/if}
+        </ul>
+    </div>
+</div>
+
+{/block}

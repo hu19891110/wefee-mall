@@ -53,6 +53,7 @@ if (! function_exists('mall_config')) {
         return $s;
     }
  }
+
  if (! function_exists('get_origin_order_goods')) {
     function get_origin_order_goods(\addons\wefeemall\model\MallOrders $order, \addons\wefeemall\model\MallGoods $goods)
     {
@@ -66,5 +67,28 @@ if (! function_exists('mall_config')) {
         }
 
         return $data;
+    }
+ }
+
+ if (! function_exists('get_order_del')) {
+    function get_order_del(\addons\wefeemall\model\MallOrders $order)
+    {
+        $address = $order->address;
+        $box = [
+            '顺丰' => 'sf',
+            '申通' => 'sto',
+            '圆通' => 'yt',
+            '韵达' => 'yd',
+            '天天' => 'tt',
+            'EMS' => 'ems',
+            '中通' => 'zto',
+            '汇通' => 'ht',
+        ];
+        $response = @file_get_contents('http://v.juhe.cn/exp/index?com='.$box[$address->del_company].'&key='.mall_config('juhe_secret').'&no='.$address->del_number);
+        $arr = json_decode($response, true);
+        if (! $arr['resultcode']) {
+            return null;
+        }
+        return $arr['result']['list'];
     }
  }

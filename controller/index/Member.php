@@ -221,4 +221,19 @@ class Member extends Base
         return view(VIEW_PATH . '/index/member/order/info.html', compact('title', 'order'));
     }
 
+    public function getOrderDel()
+    {
+        $order = MallOrders::where('id', request()->param('id'))->find();
+
+        ! $order && $this->error('订单不存在');
+
+        $order['order_status'] < 9 && $this->error('该订单暂未发货');
+
+        $del = get_order_del($order);
+
+        $title = '物流详情';
+
+        return view(VIEW_PATH . '/index/member/order/del.html', compact('title', 'del', 'order'));
+    }
+
 }
