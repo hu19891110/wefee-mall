@@ -1,6 +1,7 @@
 <?php namespace addons\wefeemall\controller\index;
 
 use addons\wefeemall\lib\AuthManage;
+use addons\wefeemall\model\MallOrders;
 use addons\wefeemall\model\MallUserAddress;
 use addons\wefeemall\traits\LoginCheck;
 use addons\wefeemall\traits\MobileVerifyCodeCheck;
@@ -198,6 +199,26 @@ class Member extends Base
         }
 
         return $data;
+    }
+
+    public function order()
+    {
+        $orders = AuthManage::user()->orders()->order('created_at', 'desc')->paginate(5);
+
+        $title = '我的订单';
+
+        return view(VIEW_PATH . '/index/member/order/list.html', compact('title', 'orders'));
+    }
+
+    public function getOrderInfo()
+    {
+        $order = MallOrders::where('id', request()->param('id'))->find();
+
+        ! $order && $this->error('订单不存在');
+
+        $title = '订单详情';
+
+        return view(VIEW_PATH . '/index/member/order/info.html', compact('title', 'order'));
     }
 
 }

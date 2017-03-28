@@ -2,7 +2,7 @@
 
 use addons\wefeemall\model\MallGoodsComments;
 
-class CommentTransform
+class CommentTransformer
 {
 
     public function transform(MallGoodsComments $comment)

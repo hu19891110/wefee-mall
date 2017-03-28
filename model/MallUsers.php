@@ -28,4 +28,9 @@ class MallUsers extends BaseModel
         return $this->hasMany('addons\wefeemall\model\MallMalls', 'user_id');
     }
 
+    public function orders()
+    {
+        return $this->hasMany('addons\wefeemall\model\MallOrders', 'user_id');
+    }
+
 }

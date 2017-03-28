@@ -1,0 +1,83 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+{block name="body"}
+
+<div style="margin-top: 40px;"></div>
+
+<div class="weui-flex">
+    <div class="weui-flex__item pt-10 pb-10 pl-15 pr-15 bg-fff bd-b">
+        <p class="lh-25">下单时间：{$order->created_at}</p>
+        <p class="lh-25">订单编号：{$order->orderid}</p>
+    </div>
+</div>
+
+<div class="bg-fff mt-10">
+    <div class="weui-flex pl-10 pr-10">
+        <div class="weui-flex__item lh-40 bd-b pt-5 pb-5">
+            <div class="left">订购商品</div>
+            <div class="right">
+                {:get_order_status_text($order['order_status'])}
+            </div>
+        </div>
+    </div>
+    {volist name="$order->goodses" id="item"}
+    <div class="weui-flex pl-10 pr-10">
+        <div class="weui-flex__item">
+            <div class="left">
+                <img src="{$item->goods_photos[0]}" width="60" height="60">
+            </div>
+            <div class="left">
+                <p class="lh-30">{$item->goods_name}</p>
+                <p><span class="cost">￥{$item->goods_now_cost}</span><span class="origin-cost">￥{$item->goods_origin_cost}</span></p>
+            </div>
+            <div class="right text-c">
+                {if condition="get_origin_order_goods($order, $item)"}
+                x{:get_origin_order_goods($order, $item)->goods_num}
+                {/if}
+            </div>
+        </div>
+    </div>
+    {/volist}
+    <div class="weui-flex bd-t pl-10 pr-10">
+        <div class="weui-flex__item pt-10 pb-10">
+            <a href="" class="order-list-logistics-button">追踪物流</a>
+            <a href="" class="order-list-confirm-receipt-button">确定收货</a>
+        </div>
+    </div>
+</div>
+
+<div class="weui-flex pl-10 pr-10 mt-20">
+    <div class="weui-flex__item lh-30">
+        服务时间：9:00-22:00
+    </div>
+</div>
+<div class="weui-flex pl-10 pr-10 bg-fff lh-40">
+    <div class="weui-flex__item pd-10">
+        <a href="{:mall_config('meiqia_service_chat_url')}" class="weui-btn weui-btn_default">在线客服</a>
+    </div>
+    <div class="weui-flex__item pd-10">
+        <a href="tel:{:mall_config('service_telphone')}" class="weui-btn weui-btn_default">电话客服</a>
+    </div>
+</div>
+
+<div class="order-contact-info bg-fff mt-20">
+    <div class="weui-flex pl-10 pr-10">
+        <div class="weui-flex__item pt-10 pb-10">
+            <p>{$order->address->contact_name} {$order->address->contact_phone}</p>
+            <p>{$order->address->address}</p>
+        </div>
+    </div>
+    <div class="weui-flex pl-10 pr-10">
+        <div class="weui-flex__item bd-t pt-10 pb-10">
+            <p>商品合计：￥{$order->origin_charge}</p>
+            <p>运费：￥{$order->del_cost}</p>
+            <p>优惠券：￥{$order->coupon_cost}</p>
+        </div>
+    </div>
+    <div class="weui-flex pl-10 pr-10">
+        <div class="weui-flex__item bd-t lh-50">
+            <p class="cost">实付：￥{$order->now_charge}</p>
+        </div>
+    </div>
+</div>
+{/block}

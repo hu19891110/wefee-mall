@@ -15,7 +15,7 @@
     <a href="{:mall_url('index.coupon/member', ['coupon_status' => 1])}" class="weui-flex__item text-c {:request()->param('coupon_status') == 1 ? 'active' : ''}">
         未使用
     </a>
-    <a href="{:mall_url('index.coupon/member', ['coupon_status' => 5])}" class="weui-flex__item text-c {:request()->param('coupon_status') == 5 ? 'active' : ''}">
+    <a href="{:mall_url('index.coupon/member', ['coupon_status' => 3])}" class="weui-flex__item text-c {:request()->param('coupon_status') == 3 ? 'active' : ''}">
         已使用
     </a>
     <a href="{:mall_url('index.coupon/member', ['coupon_status' => -1])}" class="weui-flex__item text-c {:request()->param('coupon_status') == -1 ? 'active' : ''}">
@@ -25,7 +25,7 @@
 
 {volist name="$coupons" id="coupon"}
 <div class="weui-flex pd-10">
-    <div class="weui-flex__item coupon-list-item{$coupon->coupon->coupon_status == 1 ? '' : '-used'}">
+    <div class="weui-flex__item coupon-list-item{$coupon->status == 1 ? '' : '-used'}">
         <h3 class="fs-12">{$coupon->coupon->coupon_name}</h3>
         <p class="fs-08">{$coupon->coupon->start_at}-{$coupon->coupon->end_at}</p>
         <div class="wd-100 mt-20">
@@ -47,8 +47,6 @@
             {if condition="$coupon->coupon->coupon_status eq 1"}
             正常
             {elseif condition="$coupon->coupon->coupon_status eq 3" /}
-            状态一场
-            {elseif condition="$coupon->coupon->coupon_status eq 5" /}
             已使用
             {else}
             过期

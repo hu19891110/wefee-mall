@@ -2,7 +2,7 @@
 
 use addons\wefeemall\model\MallUsers;
 
-class UserTransform
+class UserTransformer
 {
 
     public function transform(MallUsers $user)

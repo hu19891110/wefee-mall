@@ -1,0 +1,141 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+{block name="css"}
+<link rel="stylesheet" href="/addons/assets/wefeemall/static/js/dropload/dropload.css">
+<style>
+    .active { color: #b4282d; }
+</style>
+{/block}
+
+{block name="body"}
+
+<div style="margin-top: 40px;"></div>
+
+<div class="weui-flex text-c bg-fff lh-40 bd-b">
+    <div class="weui-flex__item filter-item active" data-val="0">
+        全部订单
+    </div>
+    <div class="weui-flex__item filter-item" data-val="1">
+        待付款
+    </div>
+    <div class="weui-flex__item filter-item" data-val="5">
+        待发货
+    </div>
+    <div class="weui-flex__item filter-item" data-val="9">
+        已发货
+    </div>
+    <div class="weui-flex__item filter-item" data-val="13">
+        待评价
+    </div>
+</div>
+
+
+<div class="container">
+    {volist name="orders" id="order"}
+    <a href="{:mall_url('index.member/getOrderInfo', ['id' => $order['id']])}">
+        <div class="weui-flex bg-fff mt-10">
+            <div class="weui-flex__item pl-10 pr-10">
+                <div class="wd-100 lh-40 bd-b">
+                    订单编号：{$order->orderid}
+                </div>
+                <div class="wd-100 pt-10 pb-10">
+                    <div class="left">
+                        <img src="{$order->goodses()->find()->goods_photos[0]}" width="60" height="60">
+                    </div>
+                    <div class="left pl-15 pt-10">
+                        <p>{$order->goodses()->find()->goods_name}</p>
+                        <p class="fs-08">共{:count($order->goodses)}种商品</p>
+                    </div>
+                </div>
+                <div class="wd-100 text-r pb-15">
+                    {if condition="$order->order_status eq 1"}
+                    <a href="" class="order-list-confirm-pay-button">确定支付</a>
+                    {/if}
+                    {if condition="$order->order_status eq 5"}
+                    <a href="" class="order-list-logistics-button">追踪物流</a>
+                    <a href="" class="order-list-confirm-receipt-button">确定收货</a>
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </a>
+    {/volist}
+
+</div>
+
+{/block}
+
+{block name="js"}
+<script src="/addons/assets/wefeemall/static/js/dropload/dropload.min.js"></script>
+<script>
+    $(function () {
+
+        var page = 2;
+        var status = 0;
+
+        var template = function (data) {
+            var html = '';
+            $.each(data, function (ind,obj) {
+                html += "<a href=\"{:mall_url('index.member/getOrderInfo')}\?id=" + obj.id+'">';
+                html += '<div class="weui-flex bg-fff mt-10">';
+                html += '<div class="weui-flex__item pl-10 pr-10">';
+                html += '<div class="wd-100 lh-40 bd-b">';
+                html += '订单编号：' + obj.orderid;
+                html += '</div><div class="wd-100 pt-10 pb-10">';
+                html += '<div class="left"><img src="'+obj.goods[0].goods_photos[0]+'" width="60" height="60"></div>';
+                html += '<div class="left pl-15 pt-10"><p>'+obj.goods[0].goods_name+'</p><p class="fs-08">共'+obj.goods.length+'种商品</p></div>';
+                html += '</div><div class="wd-100 text-r pb-15">';
+                if (obj.order_status == 1) {
+                    html += '<a href="" class="order-list-confirm-pay-button">确定支付</a>';
+                }
+                if (obj.order_status == 5) {
+                    html += '<a href="" class="order-list-logistics-button">追踪物流</a>' +
+                            '<a href="" class="order-list-confirm-receipt-button">确定收货</a>';
+                }
+                html += '</div></div></div></a>';
+            });
+            return html;
+        }
+
+        var dropload = $('body').dropload({
+            scrollArea : window,
+            autoLoad: false,
+            loadDownFn : function(me){
+                $.post('{:mall_url("api.order/select")}?page=' + page, {
+                    order_status: status,
+                }, function(data){
+                    page = parseInt(data.current_page) + 1;
+                    if (data.data.length == 0) {
+                        me.lock();
+                        me.noData();
+                        me.resetload();
+                        return ;
+                    }
+
+                    /** 封装数据 */
+                    var html = template(data.data);
+                    $('.container').append(html);
+
+                    me.resetload();
+                }, 'json');
+            }
+        });
+
+        $('.filter-item').click(function () {
+            $(this).addClass('active').siblings().removeClass('active');
+            status = $(this).attr('data-val');
+            page = 2;
+            dropload.unlock();
+            dropload.noData(false);
+            dropload.resetload();
+            $.post('{:mall_url("api.order/select")}?page=1', {
+                order_status: status,
+            }, function(data){
+                /** 封装数据 */
+                var html = template(data.data);
+                $('.container').html(html);
+            }, 'json');
+        });
+    });
+</script>
+{/block}

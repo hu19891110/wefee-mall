@@ -1,8 +1,8 @@
 <?php namespace addons\wefeemall\controller\api;
 
 use addons\wefeemall\model\MallGoods;
-use addons\wefeemall\transform\CommentTransform;
-use addons\wefeemall\transform\UserTransform;
+use addons\wefeemall\transform\CommentTransformer;
+use addons\wefeemall\transform\UserTransformer;
 use think\Controller;
 
 class Comment extends Controller
@@ -34,9 +34,9 @@ class Comment extends Controller
         $data['data'] = [];
 
         foreach ($model as $item) {
-            $tmp = (new CommentTransform())->transform($item);
+            $tmp = (new CommentTransformer())->transform($item);
             /** 用户信息 */
-            $tmp['user'] = (new UserTransform())->transform($item->user);
+            $tmp['user'] = (new UserTransformer())->transform($item->user);
             $data['data'][] = $tmp;
         }
 
