@@ -212,7 +212,7 @@ class Member extends Base
 
     public function getOrderInfo()
     {
-        $order = MallOrders::where('id', request()->param('id'))->find();
+        $order = AuthManage::user()->orders()->where('id', request()->param('id'))->find();
 
         ! $order && $this->error('订单不存在');
 
@@ -223,7 +223,7 @@ class Member extends Base
 
     public function getOrderDel()
     {
-        $order = MallOrders::where('id', request()->param('id'))->find();
+        $order = AuthManage::user()->orders()->where('id', request()->param('id'))->find();
 
         ! $order && $this->error('订单不存在');
 

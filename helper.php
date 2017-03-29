@@ -30,7 +30,12 @@ if (! function_exists('mall_config')) {
  }
 
  if (! function_exists('get_order_status_text')) {
-    function get_order_status_text($status)
+     /**
+      * 将订单的数字状态转换为文本
+      * @param integer $status 状态数字
+      * @return string
+      */
+     function get_order_status_text($status)
     {
         $s = '';
         switch ($status) {
@@ -55,6 +60,12 @@ if (! function_exists('mall_config')) {
  }
 
  if (! function_exists('get_origin_order_goods')) {
+     /**
+      * 获取订单的商品数量，购买时候的价格
+      * @param \addons\wefeemall\model\MallOrders $order 订单对象
+      * @param \addons\wefeemall\model\MallGoods $goods 商品信息
+      * @return \addons\wefeemall\model\MallOrderGoods
+      */
     function get_origin_order_goods(\addons\wefeemall\model\MallOrders $order, \addons\wefeemall\model\MallGoods $goods)
     {
         $data = \addons\wefeemall\model\MallOrderGoods::where([
@@ -71,6 +82,12 @@ if (! function_exists('mall_config')) {
  }
 
  if (! function_exists('get_order_del')) {
+     /**
+      * 获取订单物流信息
+      * 采用聚合API数据
+      * @param \addons\wefeemall\model\MallOrders $order 订单对象
+      * @return array
+      */
     function get_order_del(\addons\wefeemall\model\MallOrders $order)
     {
         $address = $order->address;

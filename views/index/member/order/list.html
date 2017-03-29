@@ -90,9 +90,11 @@
                 if (obj.order_status == 1) {
                     html += '<a href="" class="order-list-confirm-pay-button">确定支付</a>';
                 }
-                if (obj.order_status == 5) {
-                    html += '<a href="" class="order-list-logistics-button">追踪物流</a>' +
-                            '<a href="{:mall_url('index.member/getOrderDel')}?id='+ obj.id +'" class="order-list-confirm-receipt-button">确定收货</a>';
+                if (obj.order_status >= 5) {
+                    html += '<a href="{:mall_url('index.member/getOrderDel')}?id='+ obj.id +'" class="order-list-logistics-button">追踪物流</a>';
+                }
+                if (obj.order_status == 13) {
+                    html += '<a href="" class="order-list-confirm-receipt-button">确定收货</a>';
                 }
                 html += '</div></div></div></a>';
             });

@@ -1,0 +1,58 @@
+{extend name="../addons/wefeemall/views/index/layout/base.html" /}
+
+{block name="body"}
+
+<div style="margin-top: 80px;">
+    <div class="weui-flex">
+        <div class="weui-flex__item text-c">
+            <h4 class="lh-60">搜索商品</h4>
+        </div>
+    </div>
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+            <form action="{:mall_url('index.search/post')}" method="post">
+                <div class="weui-cells weui-form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input type="text" name="keys" class="weui-input" placeholder="关键字">
+                        </div>
+                        <div class="weui-cell__ft">
+                            <button type="submit" class="weui-btn weui-btn_default">搜索</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--<div class="weui-flex mt-20 pt-20 pl-15 pr-15 pb-15 bg-fff bd-t bd-b">-->
+        <!--<div class="weui-flex__item">-->
+            <!--<p class="mb-10">-->
+                <!--<span><b>搜索历史</b></span>-->
+                <!--<img class="right" src="/addons/assets/wefeemall/static/images/icon/delete.png" width="24" height="24">-->
+            <!--</p>-->
+            <!--<p>-->
+                <!--<a class="tag" href="">你好</a>-->
+                <!--<a class="tag" href="">哈哈</a>-->
+            <!--</p>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="weui-flex mt-20 pt-20 pl-15 pr-15 pb-15 bg-fff bd-b bd-t">-->
+        <!--<div class="weui-flex__item">-->
+            <!--<h4 class="mb-10">热搜关键字</h4>-->
+            <!--<p>-->
+                <!--<a href=""><span class="tag">你好</span></a>-->
+                <!--<a href=""><span class="tag">你好</span></a>-->
+                <!--<a href=""><span class="tag">你好</span></a>-->
+                <!--<a href=""><span class="tag">你好</span></a>-->
+                <!--<a href=""><span class="tag">你好</span></a>-->
+                <!--<a href=""><span class="tag">你好</span></a>-->
+                <!--<a href=""><span class="tag">你好</span></a>-->
+                <!--<a href=""><span class="tag">你好</span></a>-->
+                <!--<a href=""><span class="tag">你好</span></a>-->
+            <!--</p>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
+
+{/block}
