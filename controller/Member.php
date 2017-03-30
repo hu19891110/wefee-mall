@@ -91,10 +91,9 @@ class Member extends Base
         $dataSource = [];
         $startDate = strtotime('-30 days');
         while ($startDate < time()) {
-            $where['created_at'] = ['>=', date('Y-m-d', $startDate)];
-            $where['created_at'] = ['<', date('Y-m-d', $startDate + 3600*24)];
-
-            $count = MallUsers::where($where)->count();
+            $count = MallUsers::where('created_at', '>=', date('Y-m-d', $startDate))
+                                ->where('created_at', '<', date('Y-m-d', $startDate + 3600*24))
+                                ->count();
 
             $dataSource['label'][] = date('m/d', $startDate);
             $dataSource['data'][]  = $count;
