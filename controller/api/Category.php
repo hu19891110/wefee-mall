@@ -9,7 +9,8 @@ class Category extends Controller
     public function all()
     {
         $categories = MallCategories::where([
-            ['fid' => 0], ['category_status' => 1]
+            'fid' => 0,
+            'category_status' => 1,
         ])->order('category_sort', 'asc')->select();
 
         $arr = [];
