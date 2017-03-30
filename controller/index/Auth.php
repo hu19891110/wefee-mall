@@ -1,11 +1,11 @@
 <?php namespace addons\wefeemall\controller\index;
 
-use addons\wefeemall\traits\MobileVerifyCodeCheck;
 use think\Validate;
 use think\helper\Hash;
 use addons\wefeemall\lib\AuthManage;
 use addons\wefeemall\model\MallUsers;
 use addons\wefeemall\traits\VerifyCodeCheck;
+use addons\wefeemall\traits\MobileVerifyCodeCheck;
 
 class Auth extends Base
 {

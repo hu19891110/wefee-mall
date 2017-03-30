@@ -6,6 +6,7 @@ class Payed
     public function run(&$params)
     {
         /** 支付成功事件 */
+
     }
 
 }

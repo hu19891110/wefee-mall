@@ -1,10 +1,10 @@
 <?php namespace addons\wefeemall\controller\index;
 
+use think\Validate;
 use addons\wefeemall\lib\AuthManage;
 use addons\wefeemall\model\MallFeedback;
 use addons\wefeemall\traits\VerifyCodeCheck;
 use addons\wefeemall\traits\LoginCheck;
-use think\Validate;
 
 class Service extends Base
 {

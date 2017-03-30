@@ -22,7 +22,7 @@ class Mall extends Base
         $total = 0;
 
         foreach ($user->malls as $item) {
-            $total += $item->goods->goods_now_cost;
+            $total += $item->goods->goods_now_cost * $item->goods_num;
         }
 
         $title = '购物车';
