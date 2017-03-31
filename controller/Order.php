@@ -1,7 +1,7 @@
 <?php namespace addons\wefeemall\controller;
 
-use addons\wefeemall\model\MallOrders;
 use app\common\controller\Base;
+use addons\wefeemall\model\MallOrders;
 
 class Order extends Base
 {

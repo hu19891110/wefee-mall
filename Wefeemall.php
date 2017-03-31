@@ -382,4 +382,27 @@ class Wefeemall extends Addons
         Db::execute('DROP TABLE IF EXISTS '.full_table('mall_order_goods').';');
     }
 
+    protected function installTableRefund()
+    {
+        Db::execute('
+        CREATE TABLE IF NOT EXISTS '.full_table('mall_refund_orders').'(
+        `id` int(11) unsigned not null AUTO_INCREMENT,
+        `order_id` int(11) unsigned not null,
+        `refundid` varchar(64) not null,
+        `refund_charge` decimal(10,2) not null comment "退款金额",
+        `refund_reason` varchar(255) not null comment "退款理由",
+        `refund_reason_attach` varchar(2550) not null comment "理由附件",
+        `refund_status` smallint(3) unsigned default 1 not null comment "1提交,3通过,5拒绝,7已发货,9已完成",
+        `created_at` timestamp,
+        `updated_at` timestamp,
+        PRIMARY KEY(`id`)
+        )ENGINE=MyISAM DEFAULT CHARSET=utf8;
+        ');
+    }
+
+    protected function uninstallTableRefund()
+    {
+        Db::execute('DROP TABLE IF EXISTS '.full_table('mall_refund_orders').';');
+    }
+
 }
