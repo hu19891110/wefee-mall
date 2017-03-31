@@ -2,6 +2,10 @@
 
 {block name="header"}
 <link rel="stylesheet" href="/addons/assets/wefeemall/static/css/admin.css">
+<style>
+    .h-120 { height: 160px; }
+    .border-r { border-right: 1px solid #eee; }
+</style>
 {/block}
 
 {block name="body"}
@@ -12,6 +16,75 @@
     <div class="row bg-fff">
         {include file="../addons/wefeemall/views/admin/common/menu.html" /}
         <div class="col-lg-10">
+
+            <div class="row" style="border-bottom: 1px solid #eee;">
+                <div class="col-lg-3 text-center h-120 border-r">
+                    <h3>新用户</h3>
+                    <h2><i class="fa fa-users" aria-hidden="true"></i></h2>
+                    <p><b>{$newUserNum}</b> 位</p>
+                </div>
+                <div class="col-lg-3 text-center h-120 border-r">
+                    <h3>新订单</h3>
+                    <h2><i class="fa fa-line-chart" aria-hidden="true"></i></h2>
+                    <p><b>{$newOrderNum}</b> 单</p>
+                </div>
+                <div class="col-lg-3 text-center h-120 border-r">
+                    <h3>订单金额</h3>
+                    <h2><i class="fa fa-money" aria-hidden="true"></i></h2>
+                    <p><b>{$newOrderTotal}</b> 元</p>
+                </div>
+                <div class="col-lg-3 text-center h-120 border-r">
+                    <h3>退款订单</h3>
+                    <h2><i class="fa fa-retweet" aria-hidden="true"></i></h2>
+                    <p><b>{$newRefundNum}</b> 单</p>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-lg-6">
+                    <h4>最新订单信息 <small>只显示最近8条.</small></h4>
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th>订单号</th>
+                            <th>用户</th>
+                            <th>总价</th>
+                            <th>状态</th>
+                            <th>下单时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="lastOrderRecords" id="item"}
+                        <tr>
+                            <td>{$item->orderid}</td>
+                            <td>
+                                <p><img src="{$item->user->avatar}" width="50" height="50"></p>
+                                <p>{$item->user->nickname}</p>
+                            </td>
+                            <td>{$item->now_charge} 元</td>
+                            <td>{:get_order_status_text($item->order_status)}</td>
+                            <td>{$item->created_at}</td>
+                            <td>
+                                <a href="" class="btn btn-info btn-sm">详情</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-lg-6">
+                    <h4>最近售后订单 <small>只显示最近8条.</small></h4>
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
 
         </div>
     </div>

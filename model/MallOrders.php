@@ -8,6 +8,11 @@ class MallOrders extends BaseModel
         return $this->belongsTo('addons\wefeemall\model\MallUsers', 'user_id');
     }
 
+    public function coupon()
+    {
+        return $this->hasOne('addons\wefeemall\model\MallCouponUsers', 'coupon_id');
+    }
+
     public function address()
     {
         return $this->hasOne('addons\wefeemall\model\MallOrderAddress', 'order_id');

@@ -1,0 +1,102 @@
+{extend name="./layout/base" /}
+
+{block name="header"}
+<link rel="stylesheet" href="/addons/assets/wefeemall/static/css/admin.css">
+{/block}
+
+{block name="body"}
+
+{include file="./common/nav"}
+
+<div class="container-fluid mt-20">
+    <div class="row bg-fff">
+        {include file="../addons/wefeemall/views/admin/common/menu.html" /}
+        <div class="col-lg-10 pt-10">
+            <div class="row">
+                <div class="col-lg-12 mt-20">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form action="" method="get" class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">订单号</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="orderid" value="{:request()->param('orderid')}" class="form-control" placeholder="请输入关键字">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <button type="submit" class="btn btn-primary">筛选</button>
+                                        <a href="{:mall_url('order/index')}" class="btn btn-warning">取消</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 mt-20">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p>共 <b>{$orders->total()}</b> 条数据。</p>
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>订单编号</th>
+                                    <th>联系人</th>
+                                    <th>原收/实收</th>
+                                    <th>优惠券</th>
+                                    <th>运费</th>
+                                    <th>状态</th>
+                                    <th>商品</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="$orders" id="order"}
+                                <tr>
+                                    <td>{$order->orderid}</td>
+                                    <td>
+                                        <p>{$order->address->contact_name}</p>
+                                        <p>{$order->address->contact_phone}</p>
+                                        <p>{$order->address->address}</p>
+                                    </td>
+                                    <td>
+                                        <span class="label label-warning">￥{$order->origin_charge}</span>
+                                        <span class="label label-primary">￥{$order->now_charge}</span>
+                                    </td>
+                                    <td>
+                                        {if condition="$order->coupon_id eq 0"}
+                                        <span class="label label-default">无</span>
+                                        {else}
+                                        <span class="label label-info">{$order->coupon->coupon->coupon_name}：￥{$order->coupon_cost}</span>
+                                        {/if}
+                                    </td>
+                                    <td><span class="label label-success">￥{$order->del_cost}</span></td>
+                                    <td>
+                                        <span class="label label-danger">{:get_order_status_text($order->order_status)}</span>
+                                    </td>
+                                    <td><span class="label label-default">{$order->goodses()->count()}件</span></td>
+                                    <td>
+                                        <a href="{:mall_url('order/info', ['order_id' => $order->id])}" class="btn btn-primary btn-sm">详细</a>
+                                    </td>
+                                </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-lg-12 mt-20 text-center">
+                            {$orders->render()}
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="./common/footer"}
+
+{/block}

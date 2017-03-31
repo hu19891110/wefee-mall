@@ -1,0 +1,125 @@
+{extend name="./layout/base" /}
+
+{block name="header"}
+<link rel="stylesheet" href="/addons/assets/wefeemall/static/css/admin.css">
+{/block}
+
+{block name="body"}
+
+{include file="./common/nav"}
+
+<div class="container-fluid mt-20">
+    <div class="row bg-fff">
+        {include file="../addons/wefeemall/views/admin/common/menu.html" /}
+        <div class="col-lg-10 pt-10">
+            <div class="row" style="line-height: 30px;">
+                <div class="col-lg-12">
+                    <h3>基本信息</h3>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>订单号：</td>
+                            <td>{$order->orderid}</td>
+                            <td>原收：</td>
+                            <td>￥{$order->origin_charge}</td>
+                            <td>实收：</td>
+                            <td>￥{$order->now_charge}</td>
+                            <td>优惠券：</td>
+                            <td>
+                                {if condition="$order->coupon_id eq 0"}
+                                <span class="label label-default">无</span>
+                                {else}
+                                <span class="label label-info">{$order->coupon->coupon->coupon_name}：￥{$order->coupon_cost}</span>
+                                {/if}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>运费：</td>
+                            <td>￥{$order->del_cost}</td>
+                            <td>状态：</td>
+                            <td>{:get_order_status_text($order->order_status)}</td>
+                            <td>商品数：</td>
+                            <td><span class="label label-default">{$order->goodses()->count()}件</span></td>
+                            <td>下单时间：</td>
+                            <td>{$order->created_at}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col-lg-12 text-center">
+                    
+                </div>
+
+                <div class="col-lg-12">
+                    <h3>收货人信息</h3>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>收货人：</td>
+                            <td>{$order->address->contact_name}</td>
+                        </tr>
+                        <tr>
+                            <td>联系电话：</td>
+                            <td>{$order->address->contact_phone}</td>
+                        </tr>
+                        <tr>
+                            <td>收货地址：</td>
+                            <td>{$order->address->address}</td>
+                        </tr>
+                        <tr>
+                            <td>物流公司：</td>
+                            <td>{$order->address->del_company}</td>
+                        </tr>
+                        <tr>
+                            <td>物流编号：</td>
+                            <td>{$order->address->del_number}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                {if condition="$order->address->del_number neq ''"}
+                                <ul>
+                                    {volist name=":get_order_del($order)" id="item"}
+                                    <li class="lh-30 bd-b">
+                                    <p>{$item.datetime}</p>
+                                    <p>{$item.remark}</p>
+                                    </li>
+                                    {/volist}
+                                </ul>
+                                {else /}
+                                <p class="text-center">暂无物流信息</p>
+                                {/if}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col-lg-12">
+                    <h3>订单商品</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>图片</th>
+                            <th>商品名</th>
+                            <th>数量</th>
+                            <th>价格</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="$order->goodses" id="item"}
+                        <tr>
+                            <td><p><img src="{$item->goods_photos[0]}" width="120" height="60"></p></td>
+                            <td>{$item->goods_name}</td>
+                            <td>{:get_origin_order_goods($order, $item)->goods_num}</td>
+                            <td>￥{:get_origin_order_goods($order, $item)->goods_charge}</td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="./common/footer"}
+
+{/block}
