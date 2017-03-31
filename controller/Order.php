@@ -33,4 +33,29 @@ class Order extends Base
         return view(VIEW_PATH . '/admin/order/info.html', compact('title', 'order'));
     }
 
+    public function charts()
+    {
+        $dataSource = [];
+        $startDate = strtotime('-30 days');
+        while ($startDate < time()) {
+            $count = (int) MallOrders::where('created_at', '>=', date('Y-m-d', $startDate))
+                ->where('created_at', '<', date('Y-m-d', $startDate + 3600*24))
+                ->count();
+            $total = (int) MallOrders::where('created_at', '>=', date('Y-m-d', $startDate))
+                ->where('created_at', '<', date('Y-m-d', $startDate + 3600*24))
+                ->where('order_status', '>=', 5)
+                ->avg('now_charge');
+
+            $dataSource['label'][] = date('m/d', $startDate);
+            $dataSource['data'][]  = $count;
+            $dataSource['total'][] = $total;
+
+            $startDate += 3600 * 24;
+        }
+
+        $title = '订单统计';
+
+        return view(VIEW_PATH . '/admin/order/charts.html', compact('title', 'dataSource'));
+    }
+
 }
