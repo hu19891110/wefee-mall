@@ -1,30 +1,18 @@
 <?php namespace addons\wefeemall\controller\api;
 
+use think\Log;
+use Exception;
+use think\Validate;
 use Flc\Alidayu\App;
 use Flc\Alidayu\Client;
-use Flc\Alidayu\Requests\AlibabaAliqinFcSmsNumSend;
-use think\Log;
-use think\Validate;
 use addons\wefeemall\controller\index\Base;
 use addons\wefeemall\traits\VerifyCodeCheck;
-
+use Flc\Alidayu\Requests\AlibabaAliqinFcSmsNumSend;
 
 class MobileCaptcha extends Base
 {
 
     use VerifyCodeCheck;
-
-    protected $client = null;
-
-    public function _initialize()
-    {
-        parent::_initialize();
-
-        $this->client = new Client(new App([
-            'app_key' => get_addon_config('wefeemall', 'sms_app_id'),
-            'app_secret' => get_addon_config('wefeemall', 'sms_app_secret'),
-        ]));
-    }
 
     public function send()
     {
@@ -37,20 +25,28 @@ class MobileCaptcha extends Base
             'mobile' => request()->param('mobile'),
             'code'   => $code,
         ]);
+        echo $code;
 
-        /** 发送验证码 */
-        $req = new AlibabaAliqinFcSmsNumSend;
-        $req->setSmsFreeSignName(get_addon_config('wefeemall', 'sms_sign_name'))
-            ->setRecNum(request()->param('mobile'))
-            ->setSmsParam(['code' => $code])
-            ->setSmsTemplateCode(get_addon_config('wefeemall', 'sms_template_' . request()->param('type') . '_id'));
+        try {
+            /** 发送验证码 */
+            $req = new AlibabaAliqinFcSmsNumSend;
+            $req->setSmsFreeSignName(get_addon_config('wefeemall', 'sms_sign_name'))
+                ->setRecNum(request()->param('mobile'))
+                ->setSmsParam(['code' => $code])
+                ->setSmsTemplateCode(get_addon_config('wefeemall', 'sms_template_' . request()->param('type') . '_id'));
+            $client = new Client(new App([
+                'app_key' => get_addon_config('wefeemall', 'sms_app_id'),
+                'app_secret' => get_addon_config('wefeemall', 'sms_app_secret'),
+            ]));
+            $response = $client->execute($req);
 
-        $response = $this->client->execute($req);
+            /** 记录日志 */
+            Log::info($response);
 
-        /** 记录日志 */
-        Log::info($response);
-
-        $this->success('发送成功');
+            $this->success('发送成功');
+        } catch (Exception $e) {
+            $this->error($e->getMessage());
+        }
     }
 
     protected function validator()

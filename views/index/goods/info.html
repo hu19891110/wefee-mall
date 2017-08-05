@@ -129,7 +129,7 @@
 </div>
 
 <div class="weui-flex">
-    <div class="weui-flex__item">
+    <div class="weui-flex__item goods-description">
         {$goods->goods_description}
     </div>
 </div>
@@ -137,8 +137,9 @@
 <div class="weui-flex mt-20 pl-10 pr-10 bg-fff bd-t bd-b">
     <div class="weui-flex__item">
         <div class="wd-100 text-c lh-40">常见问题</div>
-        <p>购买运费如何收取？</p>
-        <p>哈哈哈安徽</p>
+        <div class="wd-100">
+        {:get_addon_config('wefeemall', 'goods_info_qa')}
+        </div>
     </div>
 </div>
 
@@ -169,17 +170,14 @@
     <div class="weui-flex">
         <div class="weui-flex__item lh-50">
             <a href="{:mall_config('meiqia_service_chat_url')}">
-                <div class="img-middle text-c bd-r" style="width: 19.2%; height: 50px; float: left;">
+                <div class="img-middle text-c" style="width: 20%; height: 50px; float: left;">
                     <img src="/addons/assets/wefeemall/static/images/icon/customer-service.png" width="36" height="36">
                 </div>
             </a>
-            <div class="text-c bd-r fs-08" style="width: 19.2%; height: 50px; float: left;">
+            <div class="fs-08" style="width: 20%; height: 50px; float: left; color: #b4282d;">
                 ￥<span class="total">{$goods->goods_now_cost}</span>
             </div>
-            <div class="text-c" style="width: 30%; height: 50px; float: left;">
-                立即购买
-            </div>
-            <div class="text-c add-malls" style="width: 30%; height: 50px; float: right; background-color: #b4282d; color: #fff;">
+            <div class="text-c add-malls" style="width: 60%; height: 50px; float: right; background-color: #b4282d; color: #fff;">
                 加入购物车
             </div>
         </div>
@@ -237,7 +235,7 @@
                     goods_id: goods_id,
                     num: num,
                 }, function (data) {
-                    alert(data.msg);
+                    _alert(data.msg);
                     setTimeout(function () {
                         layer.closeAll();
                     }, 1000)

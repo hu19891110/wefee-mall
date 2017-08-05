@@ -6,10 +6,10 @@
  */
 
 use addons\wefeemall\lib\AuthManage;
-use addons\wefeemall\model\MallCouponUsers;
 use addons\wefeemall\model\MallGoods;
-use addons\wefeemall\model\MallOrderGoods;
 use addons\wefeemall\model\MallOrders;
+use addons\wefeemall\model\MallOrderGoods;
+use addons\wefeemall\model\MallCouponUsers;
 
 class AfterCreateOrder
 {

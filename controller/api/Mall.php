@@ -1,10 +1,10 @@
 <?php namespace addons\wefeemall\controller\api;
 
-use addons\wefeemall\controller\index\Base;
 use addons\wefeemall\lib\AuthManage;
 use addons\wefeemall\model\MallGoods;
 use addons\wefeemall\model\MallMalls;
 use addons\wefeemall\traits\LoginCheck;
+use addons\wefeemall\controller\index\Base;
 
 class Mall extends Base
 {

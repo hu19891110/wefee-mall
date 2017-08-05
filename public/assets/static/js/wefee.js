@@ -8,7 +8,7 @@ var loading = function (callback) {
 	callback();
 }
 
-var alert = function (msg) {
+var _alert = function (msg) {
 	layer.open({
 		content: msg
 		,skin: 'msg'
@@ -41,6 +41,11 @@ $(function () {
 
 	/** 获取手机验证码 */
 	$('.mobile-verify-code').click(function () {
+		if ($('input[name="verify_code"]').val() == '' || $('input[name="username"]').val() == '') {
+			_alert('请输入必要信息');
+			return ;
+		}
+
 		var interval = setInterval(function () {
 			$('.mobile-verify-code').addClass('weui-btn_disabled');
 			var text = $('.mobile-verify-code').text();
@@ -61,7 +66,7 @@ $(function () {
 			mobile: $('input[name="username"]').val(),
 			type: $(this).attr('data-type')
 		}, function (data) {
-			alert(data.msg);
+			_alert(data.msg);
 		}, 'json');
 	});
 
@@ -70,7 +75,7 @@ $(function () {
 		var url = $(this).attr('data-url'),id=$(this).attr('data-id');
 		confirm('确定要删除？', function () {
 			$.post(url, {id: id}, function (data) {
-				alert(data.msg);
+				_alert(data.msg);
 				location.reload();
 			}, 'json');
 		});

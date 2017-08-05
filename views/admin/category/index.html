@@ -24,8 +24,7 @@
                                     <th>ID</th>
                                     <th>排序</th>
                                     <th>状态</th>
-                                    <th>分类</th>
-                                    <th>时间</th>
+                                    <th width="50%">分类</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -42,10 +41,6 @@
                                     <td>{$category->category_sort}</td>
                                     <td>{$category->category_status == 1 ? '<span class="label label-success">正常</span>' : '<span class="label label-danger">停止</span>'}</td>
                                     <td><b>{$category->category_name}</b></td>
-                                    <td>
-                                        <p>创建：{$category->created_at}</p>
-                                        <p>编辑：{$category->updated_at}</p>
-                                    </td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
                                             <a href="{:aurl('wefeemall/category/edit', ['category_id' => $category->id])}" class="btn btn-warning">编辑</a>
@@ -66,10 +61,6 @@
                                     <td>{$item->category_sort}</td>
                                     <td>{$item->category_status == 1 ? '<span class="label label-success">正常</span>' : '<span class="label label-danger">停止</span>'}</td>
                                     <td>┣  {$item->category_name}</td>
-                                    <td>
-                                        <p>创建：{$item->created_at}</p>
-                                        <p>编辑：{$item->updated_at}</p>
-                                    </td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
                                             <a href="{:aurl('wefeemall/goods')}?category_id={$item->id}" class="btn btn-primary">商品</a>

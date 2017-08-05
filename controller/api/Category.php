@@ -1,7 +1,7 @@
 <?php namespace addons\wefeemall\controller\api;
 
-use addons\wefeemall\model\MallCategories;
 use think\Controller;
+use addons\wefeemall\model\MallCategories;
 
 class Category extends Controller
 {
