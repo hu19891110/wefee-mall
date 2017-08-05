@@ -1,5 +1,6 @@
 <?php namespace addons\wefeemall\controller\index;
 
+use addons\wefeemall\model\MallUsers;
 use addons\wefeemall\model\MallWechatUser;
 use think\Validate;
 use think\helper\Hash;
@@ -255,7 +256,11 @@ class Member extends Base
             'avatar' => $wechatUser->getAvatar(),
         ];
         $result = MallWechatUser::create($data);
-        $result ? $this->success('绑定成功') : $this->error('绑定失败');
+        if ($result) {
+            MallUsers::where('id', AuthManage::id())->update(['avatar' => $wechatUser->getAvatar()]);
+            $this->success('绑定成功');
+        }
+        $this->error('绑定失败');
     }
 
 }

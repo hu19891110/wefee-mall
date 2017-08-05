@@ -5,16 +5,12 @@
 <div class="weui-flex" style="margin-top: 40px;">
     <div class="weui-flex__item pl-15 pr-15 member-top-header">
         <div class="left">
-            <img class="user-avatar" src="{$user->avatar}" width="80" height="80" style="border-radius: 240px;">
+            <img class="user-avatar" src="{$user->avatar?:mall_config('user_default_avatar')}" width="80" height="80" style="border-radius: 240px;">
         </div>
         <div class="left">
             <p class="lh-40 mt-15 ml-15 fs-12">小滕</p>
         </div>
-        <div class="right">
-            <p class="lh-50 mt-15">
-                <img src="/addons/assets/wefeemall/static/images/icon/qrcode.png" width="40" height="40">
-            </p>
-        </div>
+        <div class="right"></div>
     </div>
 </div>
 
