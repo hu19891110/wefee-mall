@@ -40,7 +40,7 @@ class Auth extends Base
     public function logout()
     {
         AuthManage::logout();
-        $this->success('注销成功', mall_url('index.auth/login'));
+        $this->success('注销成功', mall_url('index.index/index'));
     }
 
     public function register()
