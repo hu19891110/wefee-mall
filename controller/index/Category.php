@@ -1,9 +1,8 @@
 <?php namespace addons\wefeemall\controller\index;
 
 use addons\wefeemall\model\MallCategories;
-use think\Controller;
 
-class Category extends Controller
+class Category extends Base
 {
 
     public function index()

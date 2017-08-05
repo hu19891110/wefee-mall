@@ -1,26 +1,18 @@
 <?php namespace addons\wefeemall\controller\index;
 
 use think\Hook;
-use addons\wefeemall\lib\Teegon;
 use addons\wefeemall\lib\AuthManage;
+use addons\wefeemall\behavior\Payed;
 use addons\wefeemall\traits\LoginCheck;
 
 class Pay extends Base
 {
     use LoginCheck;
 
-    protected $instance = null;
-
     public function _initialize()
     {
         parent::_initialize();
-
-        $this->instance = new Teegon('https://api.teegon.com/');
-
-        /** 绑定钩子 */
-        Hook::add('payed', [
-            \addons\wefeemall\behavior\Payed::class,
-        ]);
+        Hook::add('payed', [Payed::class]);
     }
 
     public function pay()
@@ -29,8 +21,7 @@ class Pay extends Base
 
         /** 获取订单 */
         $order = AuthManage::user()->orders()->where('orderid', request()->param('orderid'))->find();
-
-        ! $order && $this->error('订单不存在');
+        !$order && $this->error('订单不存在');
 
         /** 暂未处理 */
         $this->success('暂无支付功能');

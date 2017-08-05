@@ -1,9 +1,9 @@
 <?php namespace addons\wefeemall\controller\index;
 
 use addons\wefeemall\lib\AuthManage;
-use addons\wefeemall\model\MallCategories;
 use addons\wefeemall\model\MallGoods;
 use addons\wefeemall\traits\LoginCheck;
+use addons\wefeemall\model\MallCategories;
 
 class Coupon extends Base
 {

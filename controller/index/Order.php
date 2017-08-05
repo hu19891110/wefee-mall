@@ -1,12 +1,12 @@
 <?php namespace addons\wefeemall\controller\index;
 
+use think\Hook;
 use addons\wefeemall\lib\AuthManage;
-use addons\wefeemall\model\MallCoupons;
 use addons\wefeemall\model\MallGoods;
 use addons\wefeemall\model\MallOrders;
 use addons\wefeemall\traits\LoginCheck;
 use addons\wefeemall\traits\TokenCheck;
-use think\Hook;
+use addons\wefeemall\behavior\AfterCreateOrder;
 
 class Order extends Base
 {
@@ -18,10 +18,7 @@ class Order extends Base
 
         $this->loginCheck();
 
-        /** 绑定钩子 */
-        Hook::add('created-order', [
-           \addons\wefeemall\behavior\AfterCreateOrder::class,
-        ]);
+        Hook::add('created-order', [AfterCreateOrder::class]);
     }
 
     public function create()

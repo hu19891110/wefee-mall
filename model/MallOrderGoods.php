@@ -4,5 +4,4 @@ use think\Model;
 
 class MallOrderGoods extends Model
 {
-
 }

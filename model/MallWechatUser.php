@@ -1,7 +1,9 @@
-<?php namespace addons\wefeemall\model;
+<?php
+namespace addons\wefeemall\model;
 
+use think\Model;
 
-class MallUserAddress extends BaseModel
+class MallWechatUser extends Model
 {
 
     public function user()

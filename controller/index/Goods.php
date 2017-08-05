@@ -1,9 +1,8 @@
 <?php namespace addons\wefeemall\controller\index;
 
 use addons\wefeemall\model\MallGoods;
-use think\Controller;
 
-class Goods extends Controller
+class Goods extends Base
 {
 
     public function info()

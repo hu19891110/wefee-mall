@@ -5,7 +5,6 @@ use addons\wefeemall\traits\LoginCheck;
 
 class Mall extends Base
 {
-
     use LoginCheck;
 
     public function _initialize()

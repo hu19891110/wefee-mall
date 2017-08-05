@@ -37,6 +37,9 @@ class Wefeemall extends Addons
 
         /** 安装购物车表 */
         $this->installTableMalls();
+
+        /** 安装微信用户表 2017.08.05 */
+        $this->installTableWechatUser();
     }
 
     protected function template()
@@ -193,6 +196,9 @@ class Wefeemall extends Addons
         $this->uninstallTableMalls();
 
         // $this->uninstallTableOrders();
+
+        // 2017.08.05
+        $this->uninstallTableWechatUser();
     }
 
     protected function uninstallTableUsers()
@@ -227,7 +233,7 @@ class Wefeemall extends Addons
 
     public function upgrade()
     {
-        $this->installTableOrders();
+        $this->installTableWechatUser();
     }
 
     protected function installTableFeedback()
@@ -403,6 +409,26 @@ class Wefeemall extends Addons
     protected function uninstallTableRefund()
     {
         Db::execute('DROP TABLE IF EXISTS '.full_table('mall_refund_orders').';');
+    }
+
+    protected function installTableWechatUser()
+    {
+        Db::execute('
+        CREATE TABLE IF NOT EXISTS '.full_table('mall_wechat_user').'(
+        `id` int(11) unsigned not null AUTO_INCREMENT,
+        `user_id` int(11) unsigned not null comment "用户ID",
+        `openid` varchar(64) not null comment "openid",
+        `nickname` varchar(64) not null comment "呢称",
+        `avatar` varchar(255) not null comment "头像",
+        `created_at` timestamp,
+        PRIMARY KEY(`id`)
+        )ENGINE=MyISAM DEFAULT CHARSET=utf8;
+        ');
+    }
+
+    protected function uninstallTableWechatUser()
+    {
+        Db::execute('DROP TABLE IF EXISTS '.full_table('mall_wechat_user').';');
     }
 
 }

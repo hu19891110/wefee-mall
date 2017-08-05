@@ -1,13 +1,13 @@
 <?php namespace addons\wefeemall\controller\index;
 
-use addons\wefeemall\lib\AuthManage;
-use addons\wefeemall\model\MallOrders;
-use addons\wefeemall\model\MallUserAddress;
-use addons\wefeemall\traits\LoginCheck;
-use addons\wefeemall\traits\MobileVerifyCodeCheck;
-use addons\wefeemall\traits\VerifyCodeCheck;
-use think\helper\Hash;
+use addons\wefeemall\model\MallWechatUser;
 use think\Validate;
+use think\helper\Hash;
+use addons\wefeemall\lib\AuthManage;
+use addons\wefeemall\traits\LoginCheck;
+use addons\wefeemall\traits\VerifyCodeCheck;
+use addons\wefeemall\model\MallUserAddress;
+use addons\wefeemall\traits\MobileVerifyCodeCheck;
 
 class Member extends Base
 {
@@ -234,6 +234,28 @@ class Member extends Base
         $title = '物流详情';
 
         return view(VIEW_PATH . '/index/member/order/del.html', compact('title', 'del', 'order'));
+    }
+
+    public function wechat()
+    {
+        if (! is_wechat()) {
+            $this->error('请通过微信访问');
+        }
+        $wechatUser = wechat_web_auth();
+        /** 检测是否已经绑定账号 */
+        $wechat = AuthManage::user()->wechat()->where('openid', $wechatUser->getId())->find();
+        if ($wechat) {
+            $this->error('当前账号已经绑定过微信号啦！');
+        }
+        /** 需要绑定 */
+        $data = [
+            'user_id' => AuthManage::id(),
+            'openid' => $wechatUser->getId(),
+            'nickname' => emoji_filter($wechatUser->getNickname()),
+            'avatar' => $wechatUser->getAvatar(),
+        ];
+        $result = MallWechatUser::create($data);
+        $result ? $this->success('绑定成功') : $this->error('绑定失败');
     }
 
 }

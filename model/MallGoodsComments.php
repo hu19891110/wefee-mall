@@ -6,12 +6,12 @@ class MallGoodsComments extends BaseModel
 
     public function user()
     {
-        return $this->belongsTo('addons\wefeemall\model\MallUsers', 'user_id');
+        return $this->belongsTo(MallUsers::class, 'user_id');
     }
 
     public function goods()
     {
-        return $this->belongsTo('addons\wefeemall\model\MallGoods', 'goods_id');
+        return $this->belongsTo(MallGoods::class, 'goods_id');
     }
 
     public function setCommentPhotosAttr($value)

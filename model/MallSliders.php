@@ -3,5 +3,4 @@
 
 class MallSliders extends BaseModel
 {
-
 }

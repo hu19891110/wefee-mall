@@ -2,9 +2,9 @@
 
 use think\Validate;
 use addons\wefeemall\lib\AuthManage;
+use addons\wefeemall\traits\LoginCheck;
 use addons\wefeemall\model\MallFeedback;
 use addons\wefeemall\traits\VerifyCodeCheck;
-use addons\wefeemall\traits\LoginCheck;
 
 class Service extends Base
 {

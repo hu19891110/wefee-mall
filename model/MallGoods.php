@@ -6,17 +6,17 @@ class MallGoods extends BaseModel
 
     public function category()
     {
-        return $this->belongsTo('addons\wefeemall\model\MallCategories', 'category_id');
+        return $this->belongsTo(MallCategories::class, 'category_id');
     }
 
     public function comments()
     {
-        return $this->hasMany('addons\wefeemall\model\MallGoodsComments', 'goods_id');
+        return $this->hasMany(MallGoodsComments::class, 'goods_id');
     }
 
     public function coupons()
     {
-        return $this->belongsToMany('addons\wefeemall\model\MallCoupons', full_table('mall_coupon_goods'), 'coupon_id', 'goods_id');
+        return $this->belongsToMany(MallCoupons::class, full_table('mall_coupon_goods'), 'coupon_id', 'goods_id');
     }
 
     public function setGoodsPhotosAttr($value)
@@ -41,12 +41,12 @@ class MallGoods extends BaseModel
 
     public function malls()
     {
-        return $this->hasMany('addons\wefeemall\model\MallMalls', 'goods_id');
+        return $this->hasMany(MallMalls::class, 'goods_id');
     }
 
     public function orders()
     {
-        return $this->belongsToMany('addons\wefeemall\model\MallOrders', full_table('mall_order_goods'), 'order_id', 'goods_id');
+        return $this->belongsToMany(MallOrders::class, full_table('mall_order_goods'), 'order_id', 'goods_id');
     }
 
 }

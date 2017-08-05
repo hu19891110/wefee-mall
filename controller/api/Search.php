@@ -11,7 +11,7 @@ class Search extends Base
     {
         $keys = htmlspecialchars(request()->param('keys'));
 
-        $keys == '' && $this->error('请输入关键字');
+        !$keys && $this->error('请输入关键字');
 
         $goodses = MallGoods::where([
             'goods_name'   => ['like', '%'.request()->param('keys').'%'],

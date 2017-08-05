@@ -7,12 +7,12 @@ class MallCouponUsers extends BaseModel
 
     public function coupon()
     {
-        return $this->belongsTo('addons\wefeemall\model\MallCoupons', 'coupon_id');
+        return $this->belongsTo(MallCoupons::class, 'coupon_id');
     }
 
     public function user()
     {
-        return $this->belongsTo('addons\wefeemall\model\MallUsers', 'user_id');
+        return $this->belongsTo(MallUsers::class, 'user_id');
     }
 
 }

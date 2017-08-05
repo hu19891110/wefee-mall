@@ -5,32 +5,37 @@ class MallUsers extends BaseModel
 
     public function address()
     {
-        return $this->hasMany('addons\wefeemall\model\MallUserAddress', 'user_id');
+        return $this->hasMany(MallUserAddress::class, 'user_id');
     }
 
     public function comments()
     {
-        return $this->hasMany('addons\wefeemall\model\modelMailGoodsComments', 'user_id');
+        return $this->hasMany(MallGoodsComments::class, 'user_id');
     }
 
     public function feedback()
     {
-        return $this->hasMany('addons\wefeemall\model\MallFeedback', 'user_id');
+        return $this->hasMany(MallFeedback::class, 'user_id');
     }
 
     public function coupons()
     {
-        return $this->hasMany('addons\wefeemall\model\MallCouponUsers', 'user_id');
+        return $this->hasMany(MallCouponUsers::class, 'user_id');
     }
 
     public function malls()
     {
-        return $this->hasMany('addons\wefeemall\model\MallMalls', 'user_id');
+        return $this->hasMany(MallMalls::class, 'user_id');
     }
 
     public function orders()
     {
-        return $this->hasMany('addons\wefeemall\model\MallOrders', 'user_id');
+        return $this->hasMany(MallOrders::class, 'user_id');
+    }
+
+    public function wechat()
+    {
+        return $this->hasOne(MallWechatUser::class, 'user_id');
     }
 
 }

@@ -5,7 +5,7 @@ class MallOrderAddress extends BaseModel
 
     public function order()
     {
-        return $this->belongsTo('addons\wefeemall\model\MallOrder', 'order_id');
+        return $this->belongsTo(MallOrder::class, 'order_id');
     }
 
 }

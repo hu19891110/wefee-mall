@@ -24,7 +24,6 @@ class Search extends Base
         ])->paginate(10);
 
         $title = '搜索结果';
-
         return view(VIEW_PATH . '/index/search/result.html', compact('title', 'keys', 'goodses'));
     }
 
