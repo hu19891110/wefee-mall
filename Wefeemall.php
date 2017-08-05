@@ -184,7 +184,7 @@ class Wefeemall extends Addons
 
         $this->uninstallTableSliders();
 
-        $this->uninstallTableOrders();
+        // $this->uninstallTableOrders();
 
         $this->uninstallTableFeedback();
 
@@ -192,7 +192,7 @@ class Wefeemall extends Addons
 
         $this->uninstallTableMalls();
 
-        $this->uninstallTableOrders();
+        // $this->uninstallTableOrders();
     }
 
     protected function uninstallTableUsers()
