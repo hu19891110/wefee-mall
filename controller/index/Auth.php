@@ -13,15 +13,16 @@ class Auth extends Base
 
     public function login()
     {
+        $this->loginCheck();
         $title = '登录';
-
         return view(VIEW_PATH . '/index/auth/login.html', compact('title'));
     }
 
     public function postLogin()
     {
-        $request = request();
+        $this->loginCheck();
 
+        $request = request();
         $this->checkVerifyCode();
 
         $data = [
@@ -39,23 +40,22 @@ class Auth extends Base
     public function logout()
     {
         AuthManage::logout();
-
         $this->success('注销成功', mall_url('index.auth/login'));
     }
 
     public function register()
     {
+        $this->loginCheck();
         $title = '注册';
-
         return view(VIEW_PATH . '/index/auth/register.html', compact('title'));
     }
 
     public function postRegister()
     {
+        $this->loginCheck();
+
         $request = request();
-
         $this->checkVerifyCode();
-
         $this->mobileVerifyCodeCheck();
 
         $data = $request->only([
@@ -81,17 +81,17 @@ class Auth extends Base
 
     public function findPass()
     {
+        $this->loginCheck();
         $title = '找回密码';
-
         return view(VIEW_PATH . '/index/auth/password.html', compact('title'));
     }
 
     public function postFindPass()
     {
+        $this->loginCheck();
+
         $request = request();
-
         $this->checkVerifyCode();
-
         $this->mobileVerifyCodeCheck();
 
         $data = $request->only([
@@ -121,6 +121,16 @@ class Auth extends Base
         $user->save();
 
         $this->success('密码重置成功，请登录。', mall_url('index.auth/login'));
+    }
+
+    /**
+     * 登陆检测
+     */
+    protected function loginCheck()
+    {
+        if (AuthManage::check()) {
+            $this->error('您已经登陆啦！');
+        }
     }
 
 }
