@@ -3,6 +3,7 @@
 use addons\wefeemall\model\MallUsers;
 use app\common\controller\Base;
 use think\Validate;
+use think\View;
 
 class Member extends Base
 {

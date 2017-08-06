@@ -74,6 +74,14 @@ a { color: #3b3b3b; }
 .cost { color: #b4282d; }
 .origin-cost { text-decoration: line-through; color: #bbb; }
 .weui-footer { line-height: 50px; }
+.text-overflow {
+	width: 100%;
+	display: inline-block;
+	word-break: keep-all;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+} 
 
 /** 标签 */
 .tag { 

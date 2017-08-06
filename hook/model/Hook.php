@@ -22,9 +22,13 @@ class Hook
         $menus = $menus?:[];
         $our = [
             [
-                'title' => '微信商城',
+                'title' => '微菲商城',
                 'href' => aurl('WefeeMall'),
-            ]
+            ],
+            [
+                'title' => '微菲商城配置',
+                'href' => url('addons/addons/config', ['addons_sign' => 'WefeeMall']),
+            ],
         ];
         $menus = array_merge($menus, $our);
         config(['WEFEE_SECOND_MENUS' => $menus]);

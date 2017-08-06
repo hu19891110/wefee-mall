@@ -263,4 +263,10 @@ class Member extends Base
         $this->error('绑定失败');
     }
 
+    public function qa()
+    {
+        $title = '帮助中心';
+        return view(VIEW_PATH . '/index/member/qa.html', compact('title'));
+    }
+
 }
