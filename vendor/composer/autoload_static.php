@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInitf4526b7e302ed9871f259f8b0c766462
 {
     public static $prefixLengthsPsr4 = array (
+        'G' => 
+        array (
+            'Gregwar\\Captcha\\' => 16,
+        ),
         'F' => 
         array (
             'Flc\\Dysms\\' => 10,
@@ -14,6 +18,10 @@ class ComposerStaticInitf4526b7e302ed9871f259f8b0c766462
     );
 
     public static $prefixDirsPsr4 = array (
+        'Gregwar\\Captcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gregwar/captcha',
+        ),
         'Flc\\Dysms\\' => 
         array (
             0 => __DIR__ . '/..' . '/flc/dysms/src',

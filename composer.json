@@ -1,6 +1,7 @@
 {
     "require": {
-        "flc/dysms": "^0.1.0"
+        "flc/dysms": "^0.1.0",
+        "gregwar/captcha": "^1.1"
     },
     "repositories": {
         "packagist": {

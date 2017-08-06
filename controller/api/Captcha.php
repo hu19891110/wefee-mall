@@ -1,22 +1,22 @@
 <?php namespace addons\wefeemall\controller\api;
 
 use think\Controller;
-use think\captcha\Captcha AS CaptchaLib;
+use Gregwar\Captcha\PhraseBuilder;
+use Gregwar\Captcha\CaptchaBuilder;
 
 class Captcha extends Controller
 {
 
     public function index()
     {
-        $captcha = new CaptchaLib([
-            'length'   => 4,
-            'useCurve' => false,
-            'reset'    => false,
-        ]);
-
+        $phraseBuilder = new PhraseBuilder(4, '0123456789');
+        $builder = new CaptchaBuilder(null, $phraseBuilder);
+        $builder->build();
+        session('verify_code', $builder->getPhrase());
+        // Output
         ob_clean();
-
-        return $captcha->entry();
+        header('Content-type: image/jpeg');
+        $builder->output();
     }
 
 }

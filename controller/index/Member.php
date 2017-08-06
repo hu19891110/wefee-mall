@@ -121,7 +121,6 @@ class Member extends Base
     public function postChangePass()
     {
         $this->checkVerifyCode();
-
         $data = $this->changePassValidator();
 
         $user = AuthManage::user();
@@ -165,7 +164,6 @@ class Member extends Base
     public function postChangeMobile()
     {
         $this->checkVerifyCode();
-
         $this->mobileVerifyCodeCheck();
 
         $data = $this->changeMobileValidator();
