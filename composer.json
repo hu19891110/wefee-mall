@@ -1,5 +1,11 @@
 {
     "require": {
-        "flc/alidayu": "^2.0"
+        "flc/dysms": "^0.1.0"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.laravel-china.org"
+        }
     }
 }

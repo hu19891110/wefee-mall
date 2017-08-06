@@ -1,38 +1,45 @@
 [
     {
-        "name": "flc/alidayu",
-        "version": "v2.0.5",
-        "version_normalized": "2.0.5.0",
+        "name": "flc/dysms",
+        "version": "v0.1",
+        "version_normalized": "0.1.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/flc1125/alidayu.git",
-            "reference": "03a2b8258c55a8530f191af55b5e18554ef7113c"
+            "url": "https://github.com/flc1125/dysms.git",
+            "reference": "3037bfc244f50df4fa05f1e7a75e742fbde3e852"
         },
         "dist": {
             "type": "zip",
-            "url": "https://files.phpcomposer.com/files/flc1125/alidayu/03a2b8258c55a8530f191af55b5e18554ef7113c.zip",
-            "reference": "03a2b8258c55a8530f191af55b5e18554ef7113c",
-            "shasum": ""
+            "url": "https://api.github.com/repos/flc1125/dysms/zipball/3037bfc244f50df4fa05f1e7a75e742fbde3e852",
+            "reference": "3037bfc244f50df4fa05f1e7a75e742fbde3e852",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
         },
         "require": {
             "php": ">=5.4.0"
         },
-        "time": "2017-01-25 08:12:30",
+        "time": "2017-07-18T17:00:59+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "Flc\\Alidayu\\": "src/Alidayu/"
+                "Flc\\Dysms\\": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
             "MIT"
         ],
-        "description": "阿里大于(鱼)API-SDK；适用任何PHP项目，包括Laravel、Yii、Thinkphp等...",
+        "description": "阿里短信；适用任何PHP项目，包括Laravel、Yii、Thinkphp等...",
         "keywords": [
-            "alidayu",
-            "flc"
+            "dysms",
+            "flc",
+            "阿里短信"
         ]
     }
 ]

@@ -9,14 +9,14 @@ class ComposerStaticInitf4526b7e302ed9871f259f8b0c766462
     public static $prefixLengthsPsr4 = array (
         'F' => 
         array (
-            'Flc\\Alidayu\\' => 12,
+            'Flc\\Dysms\\' => 10,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Flc\\Alidayu\\' => 
+        'Flc\\Dysms\\' => 
         array (
-            0 => __DIR__ . '/..' . '/flc/alidayu/src/Alidayu',
+            0 => __DIR__ . '/..' . '/flc/dysms/src',
         ),
     );
 

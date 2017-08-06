@@ -1,8 +1,8 @@
 <?php namespace addons\wefeemall\controller\index;
 
+use think\Controller;
 use addons\wefeemall\lib\AuthManage;
 use addons\wefeemall\model\MallWechatUser;
-use think\Controller;
 
 class Base extends Controller
 {
